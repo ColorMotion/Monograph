@@ -1,0 +1,3 @@
+[submodule "capa-epusp-abntex2"]
+	path = capa-epusp-abntex2
+	url = https://github.com/brunocfp/capa-epusp-abntex2.git
