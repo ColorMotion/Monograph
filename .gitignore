@@ -1,7 +1,8 @@
-/*.sty
-/*.aux
-/*.dvi
-/*.fdb_latexmk
-/*.fls
-/*.log
-/*.out.ps
+*.sty
+*.aux
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.out.ps
+*.pdf
