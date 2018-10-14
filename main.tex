@@ -25,8 +25,21 @@ VICTORIA AKINA TANAKA}
 \imprimirfalsafolhaderosto
 \imprimirfolhaderosto
 
+\begin{resumo}
+Insert abstract here.
+\vspace{\onelineskip}
+
+\noindent
+\textbf{Keywords}: Engineering. Capstone. Colorization. Potato salad.
+\end{resumo}
+
+TODO listas de gráficos, tabelas, abreviaturas e siglas, símbolos
+
+\tableofcontents
+
 \maketitle
 
+\chapter{Introduction}
 \section{Introduction}
 
 \subsection{Objective}
@@ -41,18 +54,29 @@ As stated in section \ref{sec:Motivation}, the traditional process of coloring i
 The same can be said to the colorization of videos, with the added difficulty of maintaining consistency through frames. Some editing tools can help this process by tracking the input from the user between frames, but the initial input and challenges involving rapid changing scenes add to the complexity of the process.
 %TODO: citation needed, falar dos editores?
 
-\subsection{Previous work}
+\chapter{Literature review}
+
+1) Levantamento bibliográfico em bases de dados nacionais e internacionais, a
+partir de palavras-chave em português e inglês;
+
+2) Busca pelos textos completos dos trabalhos selecionados no levantamento;
+
+3) Leitura e fichamento (resumo analítico) dos trabalhos relevantes. É imprescindível anotar os dados dos documentos consultados, para posterior citação e referência;
+
+4) Cruzamento de informações e citações de modo a elencar um quadro de autores sobre o assunto, alinhados com o ponto de vista do pesquisador;
+
+5) Redação da revisão e citações, de acordo com o assunto e tópicos abordados.
+
 A learning-based approach for automatic image and video colorization
 
-\subsection{Organization}
+\chapter{Methodology}
+\subsection{Organization?}
 TODO
 
 \section{Conceptual aspects} \label{sec:Concept}
 Neural networks for colorization can be divided in two broad categories: those that require a input from the user, and those that use a automated process. In both cases, the most common approach uses Convolutional Neural Networks (CNN) to leverage different image characteristics, and use those patterns to identify and separate objects in the image and colorize them accordingly. Other approaches are possible, for example through the use of self organizing maps along side neural networks as shown in Richart \textit{et al.} \cite{Richart_som_nn}; but for the purposes of this paper we will focus in CNN-based algorithms.
 
 User guided algorithms TODO
-
-TODO -> AUTOMATED
 
 \section{Methodology}
 The methodology adopted four main phases of development: study and choice of existent machine learning algorithms; development of a dataset; adaptation of the chosen algorithm to support recurrent frame inputs and optical flow patterns; and optimization based on A/B tests and metrics.
@@ -61,20 +85,40 @@ The methodology adopted four main phases of development: study and choice of exi
 Like stated on section \ref{sec:Concept}, the
 
 \subsection{dataset}
-142753 frames in 836 scenes
-591780 in 1629 scenes
+Preparation:
 
+TODO Histogram and SSIM analysis
+
+Augmentation:
+
+TODO document Keras augmentation
+
+The initial dataset was composed of the free movies Tears of Steel (year TODO cite) and Valkaama (year TODO cite). After filtering and splitting the scenes, the dataset had 142753 frames in 836 distinct scenes. This dataset proved too small for the task in hand, given that, in our methodology, we employed a network with a high number of parameters, which is very prone to overfitting. The network did overfit in our initial tests (TODO train/val numbers and curve).
+
+The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in distinct 1629 scenes. Data augmentation was also implemented during training to reduce the amount of overfitting to the training dataset. TODO document augmentation. TODO show reduced overfitting, show loss curves.
+
+Lastly, part of the ImageNet (ref: http://image-net.org/about-overview) dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". The (TODO: count images) downloaded images were used during training of the user guided colorization model.
 
 \subsection{algorithm adaptation}
 
 \subsection{optimization}
 After obtaining a network that can adequately process a video with
 
+TODO strategy: incremental enhancements and retraining, document importing weights from other models, document performance optimizations
+
 \section{Used technologies}
 The implementation of
 
 \section{System specifications}
-TODO
+TODO specs, performance analisys
+
+\chapter{Results}
+
+\chapter{Discussion of achieved results}
+
+\chapter{Conclusions}
+
+\chapter{TODO glossary, appendix}
 
 \bibliography{referencias.bib}
 %\printbibliography
