@@ -1,7 +1,9 @@
 \documentclass[12pt,openright,twoside,a4paper,brazil]{abntex2}
 \usepackage[utf8]{inputenc}
-\usepackage{capa-epusp-abntex2/capa-epusp-abntex2}
+\usepackage{graphicx}
+\usepackage{capa-epusp-abntex2/capa-epusp-abntex2}  % ver https://github.com/brunocfp/capa-epusp-abntex2/blob/master/README.md
 % Folha de estilo: http://www.poli.usp.br/bibliotecas/servicos/publicacoes-online.html
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 
 \author{TIAGO KOJI CASTRO SHIBATA\\
 HENRIQUE CASSIANO SOUZA BARROS\\
@@ -21,7 +23,51 @@ BRUNO DE CARVALHO ALBERTINI}
 
 \section{Introduction}
 
-\section{Previous work}
+\subsection{Objective}
+In this paper, we propose a method for automatic video colorization, using a machine learning-based approach.
+
+\subsection{Motivation} \label{sec:Motivation}
+The problem of colorization in the field of machine learning is one of major interest, as exemplifies key aspects in machine learning applications involving classification. It also presents results that can be easily compared to human perception and performance, and can be used to automate a manual process. The algorithms in the field focus on the coloring of images, with colorization of videos being a extension or proposed continuation. We propose the use of state-of-the-art machine learning algorithms to colorize videos, prioritizing methods to maintain consistency of colors between frames in a scene whilst detecting frames associated with a new scene.
+
+\subsection{Justification}
+As stated in section \ref{sec:Motivation}, the traditional process of coloring images involve manual inputs from the user, with the authenticity of the expected coloring being a major limiting aspect.
+%TODO: citation needed, problaly something about restoring pictures
+The same can be said to the colorization of videos, with the added difficulty of maintaining consistency through frames. Some editing tools can help this process by tracking the input from the user between frames, but the initial input and challenges involving rapid changing scenes add to the complexity of the process.
+%TODO: citation needed, falar dos editores?
+
+\subsection{Previous work}
 A learning-based approach for automatic image and video colorization
+
+\subsection{Organization}
+TODO
+
+\section{Conceptual aspects} \label{sec:Concept}
+Neural networks for colorization can be divided in two broad categories: those that require a input from the user, and those that use a automated process. In both cases, the most common approach uses Convolutional Neural Networks (CNN) to leverage different image characteristics, and use those patterns to identify and separate objects in the image and colorize them accordingly. Other approaches are possible, for example through the use of self organizing maps along side neural networks as shown in Richart \textit{et al.} \cite{Richart_som_nn}; but for the purposes of this paper we will focus in CNN-based algorithms.
+
+User guided algorithms TODO
+
+TODO -> AUTOMATED
+
+\section{Methodology}
+The methodology adopted four main phases of development: study and choice of existent machine learning algorithms; development of a dataset; adaptation of the chosen algorithm to support recurrent frame inputs and optical flow patterns; and optimization based on A/B tests and metrics.
+
+\subsection{choice of algorithm}
+Like stated on section \ref{sec:Concept}, the
+
+\subsection{dataset}
+
+\subsection{algorithm adaptation}
+
+\subsection{optimization}
+After obtaining a network that can adequately process a video with
+
+\section{Used technologies}
+The implementation of
+
+\section{System specifications}
+TODO
+
+\bibliography{referencias.bib}
+%\printbibliography
 
 \end{document}
