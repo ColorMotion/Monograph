@@ -8,3 +8,5 @@
 *.out.ps
 *.pdf
 *.sty
+*.synctex*
+*.toc
