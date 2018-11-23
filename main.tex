@@ -73,8 +73,26 @@ The same can be said to the colorization of videos, with the added difficulty of
 %TODO:citar como eles fazem o tracking?
 
 \chapter{Related work}
+Most of the previous works studied were concerned with the problem of coloring images. One traditional method to resolve this problem was inaugurated by Levin  \textit{et al.},
+%TODO: citar Levin 2004
+where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This type of approach has received improvements in following works,
+%TODO: citar algum destes trabalhos pós Levin
+but the necessity of user-guidance has always represented a compromise in the process.
 
-TODO: Importar nossos resumos do Mendeley
+One method to simplify the scribble-based approach is the reference-approach, were a reference image is supplied rather than local colors. This method is explored by Kumar \textit{et al.},
+%TODO: citar A learning-based approach for automatic image and video colorization
+where pixels are grouped for both feature extraction and color classification, which in turn is resolved via a randomized decision forest. The reference-approach method is also employed in other problems in the image domain, such as style-transfer.
+%TODO: citar o trabalho de transferência de estilo (relevante aqui imo)
+
+The first fully-automated technique created was developed by Cheng \textit{et al.}, %TODO:citar deep colorization (2015)
+where a DNN is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
+
+Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks.
+%TODO: citar CNNs. Focar no colorful
+The Colorful
+
+%TODO: talvez inlcuir Learning Large-Scale Automatic Image Colorization como referencia
+%TODO: Importar nossos resumos do Mendeley
 
 1) Levantamento bibliográfico em bases de dados nacionais e internacionais, a
 partir de palavras-chave em português e inglês;
