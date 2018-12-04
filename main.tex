@@ -16,7 +16,7 @@ HENRIQUE CASSIANO SOUZA BARROS\\
 VICTORIA AKINA TANAKA}
 \orientador{BRUNO DE CARVALHO ALBERTINI}
 \areaconcentracao{Computer Engineering}
-\preambulo{Monograph of the capstone project of the Computer Engineering bachelor in Escola Politécnica da Universidade de São Paulo}
+\preambulo{Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo}
 \title{ColorMotion: Automatic video colorization}
 \date{São Paulo\\(November 2018)}
 
@@ -36,7 +36,7 @@ VICTORIA AKINA TANAKA}
 \par\end{flushright}\end{epigrafe}
 
 \begin{resumo}
-Given a grayscale video, this paper proposes a method for colorization using convolutional neural networks in an encoder-decoder architecture. Unlike current image colorization models which, when applied frame by frame, create inconsistencies between frames, this model maintains some state between frames and learns to colorize while maintaining the colors of regions that existed on previous frames. The algorithm uses dense optical flow to propagate colors between frames. The method is user-guided in the sense that an user can input pixel colors as additional information, biasing the algorithm at multimodal color choices. Training was done on large scale datasets taken from open source videos and the ImageNet dataset, which was artificially augmented to generate frame sequences with motion.
+Given a grayscale video, this paper proposes a method for colorization using convolutional neural networks in an encoder-decoder architecture. Unlike current image colorization models which, when applied frame by frame, create inconsistencies between frames, this model maintains state in the encoded features and learns to colorize while maintaining the colors of regions that existed on previous frames. Dense optical flow is used to track movement and propagate colors between frames. The method is user-guided in the sense that an user can input pixel colors as additional information, biasing the algorithm at multimodal color choices. Training was done on large scale datasets taken from open source videos and the ImageNet dataset, which was artificially augmented to generate frame sequences with motion.
 \vspace{\onelineskip}
 
 \noindent
@@ -55,7 +55,7 @@ Given a grayscale video, this paper proposes a method for colorization using con
 \maketitle
 
 \chapter{Introduction}
-In this paper, we propose a method for automatic video colorization, using a machine learning-based approach.
+In this monograph, we propose a method for automatic video colorization, using a machine learning-based approach.
 
 Previous work \cite{colorful} has used CNNs trained on large-scale datasets to colorize pictures successfully. However, when applied frame by frame on videos, the predictions have inconsistencies between frames, since no state is maintained between frames and different colors are predicted on the same object after small changes in the input grayscale image.
 
@@ -188,8 +188,39 @@ Using a GTX1080 consumer level card, streaming the frames one by one (without ba
 %O modelo final obteve 32ms/quadro em uma placa de nível de consumidor (NVIDIA GTX1080) com batches unitários, possuia 34051138 parâmetros treináveis, e após serializado ocupava 390MB. Após otimização (remoção de camadas e pesos pouco influentes pelo método Average Percentage of Zeros - APoZ) e uso de batches de 8 frames, obtivemos o desempenho de 28ms/quadro, com 28879168 parâmetros treináveis, e 111MB. O modelo é aplicável em fluxos de vídeo em tempo real.
 
 \chapter{Results}
+\section{Comparison to competing methods}
+
+\section{User tests}
+%TODO some images
+In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos were in 256X256 resolution. 0.016\% of the original a*b* values were used as guidance. The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}.
+%TODO: quantas pessoas?
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l|ll}
+\cline{2-3}
+                                    & \multicolumn{2}{l|}{\textbf{Chosen}} &                           &  \\ \cline{1-3}
+\multicolumn{1}{|l|}{\textbf{Real}} & \textbf{No}      & \textbf{Yes}      &                           &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{\textbf{No}}   & 40.4             & 7.9               & \multicolumn{1}{l|}{48.3} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{\textbf{Yes}}  & 6.7              & 44.9              & \multicolumn{1}{l|}{51.7} &  \\ \cline{1-4}
+                                    & 47.2             & 52.8              &                           &  \\ \cline{2-3}
+\end{tabular}
+\label{table:ABresults}
+\caption{Results obtained after the AB tests.}
+\end{table}
+
+We observed that in the videos colorized by the network, \(7.9/40.4 = 19.6\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 12.9\% of the time, volunteers where fooled and chose the colorized version.
 
 \chapter{Discussion of achieved results}
+One of the main results observed in the tests was the efficiency of the network in reproducing external enviromnents, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal enviromnents with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
+%TODO image of stuff going right and wrong in terms of vegetation vs inside
+
+Improvements would also be likely if we used a neural network for dense optical flow estimation instead of the Lucas-Kanade method. An intermediate neural network for dense optical flow could be trained end-to-end with the rest of the network and possibly achieve better global results. Currently, there are a few options for fast optical flow estimation in deep learning, and our network would likely remain usable in real time.
+%TODO: fotos de casos onde a cor mudou pelo opt flow
+%TODO: citar redes de opt flow
+%TODO: citar transf. de estilo Microsoft
+
+
+
 
 \chapter{Conclusions}
 
