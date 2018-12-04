@@ -151,6 +151,9 @@ The dataset structure was exported to files describing ranges of frames correspo
 
 Our first, baseline model was created using a convolutional DNN. We borrowed the same architecture used in Colorful \cite{colorful}, except we reimplemented it in Keras. Our main goal with this model was to gain familiarity with the tooling we would use in the rest of the work.
 
+The architecture implements an encoder-decoder architecture with skip connections. To enlarge the receptive field of convolutions with encoded features and empower the network to detect larger features, encoded features go through dilated convolutions.
+%TODO falar mais da arquitetura?
+
 \subsection{Objective function}
 
 The objective function used in the baseline model is the mean squared error (MSE) since it'e easy to use. Related work \cite{colorful} shows that MSE is not a good objective function to create convincing colorizations, since it gives very conservative predictions in multimodal objects, creating undersaturated images. Other methods, such as regressing a color probability distribution function \cite{colorful}, would be more suitable, but are harder to implement and train.
@@ -272,8 +275,15 @@ Improvements would also be likely if we used a neural network for dense optical 
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[height=\textheight]{model_plot/Simple}
-\caption{Simple model architecture - expanded}
+\includegraphics[height=\textheight]{model_plot/Simple1}
+\caption{Simple model architecture expanded - Part 1}
+\label{simple_plot}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[height=\textheight]{model_plot/Simple2}
+\caption{Simple model architecture expanded - Part 2}
 \label{simple_plot}
 \end{figure}
 
