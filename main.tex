@@ -8,6 +8,7 @@
 % http://www.poli.usp.br/images/stories/media/download/bibliotecas/DiretrizesTesesDissertacoes.pdf
 % http://sites.poli.usp.br/d/pme2599/Documentos/Diretrizes%20de%20elabora%C3%A7%C3%A3o%20do%20trabalho%20final.pdf
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage{float}
 \graphicspath{{./images/}}
 
 \author{TIAGO KOJI CASTRO SHIBATA\\
@@ -43,6 +44,10 @@ Given a grayscale video, this paper proposes a method for colorization using con
 \end{resumo}
 
 %TODO listas de gráficos, tabelas, abreviaturas e siglas, símbolos
+%DNN - Deep Neural Network
+%CNN - COnvolutional Neural Network
+%MSE - Mean Squared Error
+
 \cleardoublepage
 
 \tableofcontents
@@ -52,9 +57,9 @@ Given a grayscale video, this paper proposes a method for colorization using con
 \chapter{Introduction}
 In this paper, we propose a method for automatic video colorization, using a machine learning-based approach.
 
-Previous work (TODO reference Colorful...) has used CNNs trained on large-scale datasets to colorize pictures successfully. However, when applied frame by frame on videos, the predictions have inconsistencies between frames, since no state is maintained between frames and different colors are predicted on the same object after small changes in the input grayscale image.
+Previous work \cite{colorful} has used CNNs trained on large-scale datasets to colorize pictures successfully. However, when applied frame by frame on videos, the predictions have inconsistencies between frames, since no state is maintained between frames and different colors are predicted on the same object after small changes in the input grayscale image.
 
-Since the colorization problem is multimodal (TODO reference Colorful), that is, multiple colors are plausible colorizations for a single object, the proposed model can also be user-guided. The algorithm can take input colors for a given object (e.g. the user can choose a t-shirt's color to be red) and will colorize the object and propagate it to the next frames.
+Since the colorization problem is multimodal \cite{colorful}, that is, multiple colors are plausible colorizations for a single object, the proposed model can also be user-guided. The algorithm can take input colors for a given object (e.g. the user can choose a t-shirt's color to be red) and will colorize the object and propagate it to the next frames.
 
 \section{Motivation} \label{sec:Motivation}
 The problem of colorization in the field of machine learning is one of major interest. It is not a solved problem and poses challenges unlike others, since its solutions are multimodal (the same object has multiple plausible colorizations) and its goal can be not to generate the colorization closest to ground truth, but one that's the most believable. Furthermore, it automates a manual, boring and expensive process: professional picture and video restoration services can cost upwards of thousands of dollars.
@@ -64,7 +69,7 @@ We take colorization of videos to be an extension of the colorization of images.
 
 \section{Evaluation}
 Results are trained on large scale data using open source videos, personal videos collected by the authors, and ImageNet images augmented to have artificial motion. %TODO insert loss imformation
-The results are then tested on people: Volunteers were asked to rate scenes as original or computer colorized, so we can have a metric on how believeable the colorization is.
+The results are then tested on people: Volunteers were asked to rate scenes as original or computer colorized, so we can have a metric on how believable the colorization is.
 
 \section{Justification}
 As stated in section \ref{sec:Motivation}, the traditional process of coloring images involve manual inputs from the user and use of advanced professional editing tools.
@@ -73,39 +78,37 @@ The same can be said to the colorization of videos, with the added difficulty of
 %TODO:citar como eles fazem o tracking?
 
 \chapter{Related work}
-Most of the previous works studied were concerned with the problem of coloring images. One traditional method to resolve this problem was inaugurated by Levin  \textit{et al.},
-%TODO: citar Levin 2004
-where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This type of approach has received improvements in following works,
-%TODO: citar algum destes trabalhos pós Levin
+Most of the previous works studied were concerned with the problem of coloring images. One traditional method to resolve this problem was inaugurated by Levin  \textit{et al.} \cite{Levin2004},
+where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This type of approach has received improvements in following works \cite{Kumar2012},
+%TODO: citar mais um trabalho pós-Levin
 but the necessity of user-guidance has always represented a compromise in the process.
 
-One method to simplify the scribble-based approach is the reference-approach, were a reference image is supplied rather than local colors. This method is explored by Kumar \textit{et al.},
-%TODO: citar A learning-based approach for automatic image and video colorization
+One method to simplify the scribble-based approach is the reference-approach, were a reference image is supplied rather than local colors. This method is explored by Kumar \textit{et al.} \cite{Kumar2012},
 where pixels are grouped for both feature extraction and color classification, which in turn is resolved via a randomized decision forest. The reference-approach method is also employed in other problems in the image domain, such as style-transfer.
 %TODO: citar o trabalho de transferência de estilo (relevante aqui imo)
 
-The first fully-automated technique created was developed by Cheng \textit{et al.}, %TODO:citar deep colorization (2015)
+The first fully-automated technique created was developed by Cheng \textit{et al.} \cite{Cheng2015},
 where a DNN is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
 
 Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks.
-%TODO: citar CNNs. Focar no colorful
-The Colorful
+%TODO: citar CNNs (Larsson, Lizuka). Focar no colorful
+The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}
 
 %TODO: talvez inlcuir Learning Large-Scale Automatic Image Colorization como referencia
 %TODO: Importar nossos resumos do Mendeley
 
-1) Levantamento bibliográfico em bases de dados nacionais e internacionais, a
-partir de palavras-chave em português e inglês;
+%1) Levantamento bibliográfico em bases de dados nacionais e internacionais, a
+%partir de palavras-chave em português e inglês;
 
-2) Busca pelos textos completos dos trabalhos selecionados no levantamento;
+%2) Busca pelos textos completos dos trabalhos selecionados no levantamento;
 
-3) Leitura e fichamento (resumo analítico) dos trabalhos relevantes. É imprescindível anotar os dados dos documentos consultados, para posterior citação e referência;
+%3) Leitura e fichamento (resumo analítico) dos trabalhos relevantes. É imprescindível anotar os dados dos documentos consultados, para posterior citação e referência;
 
-4) Cruzamento de informações e citações de modo a elencar um quadro de autores sobre o assunto, alinhados com o ponto de vista do pesquisador;
+%4) Cruzamento de informações e citações de modo a elencar um quadro de autores sobre o assunto, alinhados com o ponto de vista do pesquisador;
 
-5) Redação da revisão e citações, de acordo com o assunto e tópicos abordados.
+%5) Redação da revisão e citações, de acordo com o assunto e tópicos abordados.
 
-A learning-based approach for automatic image and video colorization
+%A learning-based approach for automatic image and video colorization
 
 \chapter{Methodology}
 \section{Conceptual aspects} \label{sec:Concept}
@@ -172,7 +175,7 @@ images were used during training of the user guided colorization model.
 After these initial results, we achieved a validation MSE loss of 38.43
 %TODO: atualizar quando resultado melhorar.
 Our initial training strategy was to start with a deep, large model and use model pruning techniques to remove layers that don't affect the result and compress the model while achieving similar performance. To this end,
-%TODO: documentar métodos usados de poda.
+%TODO: documentar métodos usados de poda (layer removal e APoZ).
 
 \section{Used technologies}
 Keras, OpenCV, numpy
@@ -181,13 +184,17 @@ Keras, OpenCV, numpy
 %TODO specs, performance analisys
 Using a GTX1080 consumer level card, streaming the frames one by one (without batching) leads to inference times of 32ms in the unoptimized, large, deep model. Batching multiple frames yields average performance of up to 28ms/frame.
 
-\chapter{Results}
 
+%O modelo final obteve 32ms/quadro em uma placa de nível de consumidor (NVIDIA GTX1080) com batches unitários, possuia 34051138 parâmetros treináveis, e após serializado ocupava 390MB. Após otimização (remoção de camadas e pesos pouco influentes pelo método Average Percentage of Zeros - APoZ) e uso de batches de 8 frames, obtivemos o desempenho de 28ms/quadro, com 28879168 parâmetros treináveis, e 111MB. O modelo é aplicável em fluxos de vídeo em tempo real.
+
+\chapter{Results}
 
 \chapter{Discussion of achieved results}
 
 \chapter{Conclusions}
 
+
+%TODO \chapter{Future work}? Por enquanto colocando na discussao
 %\chapter{TODO glossary, appendix}
 
 \bibliography{referencias.bib}
