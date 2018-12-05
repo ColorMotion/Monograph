@@ -142,13 +142,6 @@ Most of the state-of-the-art algorithms applied today involve the use of Convolu
 %pensando/tentando colocar mais teoria nessa parte, por ser estado da arte/mais relevante
 
 %TODO: talvez incluir Learning Large-Scale Automatic Image Colorization como referencia
-%TODO: Importar nossos resumos do Mendeley (a principio check)
-
-%4) Cruzamento de informações e citações de modo a elencar um quadro de autores sobre o assunto, alinhados com o ponto de vista do pesquisador;
-
-%5) Redação da revisão e citações, de acordo com o assunto e tópicos abordados.
-
-%A learning-based approach for automatic image and video colorization
 
 \chapter{Methodology}
 
@@ -187,12 +180,12 @@ The project is written in Python, using the Keras framework with the Tensorflow 
     \centering
     \begin{tabular}{l|l|l|l}
     Tool            & \multicolumn{2}{l|}{Usage}                 & Website             \\ \hline
-    Python          & \multicolumn{2}{p{6cm}|}{Opted programming language.} & https://www.python.org/ \\ \hline
+    Python          & \multicolumn{2}{p{6cm}|}{Programming language.} & https://www.python.org/ \\ \hline
     CUDA            & \multicolumn{2}{p{6cm}|}{API for GPU-based network training.}  & https://developer.nvidia.com/cuda-zone \\ \hline
-    Keras           & \multicolumn{2}{p{6cm}|}{API for neural network development. Implemented with Tensorflow back-end.}  & https://keras.io/   \\ \hline
+    Keras           & \multicolumn{2}{p{6cm}|}{High-level API for neural network development. Requires a back-end, such as TensorFlow.}  & https://keras.io/   \\ \hline
     OpenCV          & \multicolumn{2}{p{6cm}|}{Image processing package, used for dataset processing and for its implementation of optical flow.}  & https://opencv.org/ \\ \hline
-    Numpy           & \multicolumn{2}{p{6cm}|}{Array processing package, used as a prerequisite for Keras and OpenCV and as a better solution for manipulating the network weights.}  & http://www.numpy.org/ \\ \hline
-    Docker          &  \multicolumn{2}{p{6cm}|}{Container software used for portability.}  & https://www.docker.com/ \\ \hline
+    Numpy           & \multicolumn{2}{p{6cm}|}{Numeric processing package, used as a prerequisite for Keras and OpenCV, manipulation of OpenCV matrices and network weights.}  & http://www.numpy.org/ \\ \hline
+    Docker          &  \multicolumn{2}{p{6cm}|}{Container software used for portability and easy deployment.}  & https://www.docker.com/ \\ \hline
     \end{tabular}
     \label{table:tools}
     \caption{Technical tools.}
@@ -211,7 +204,7 @@ As stated on Colorful \cite{colorful} and seen on related research, the L*a*b co
 
 \subsection{Processing of scenes from movies}
 
-We wanted a dataset made of open source content, with permissive licenses. After some research, we decided to use the open source movies Tears of Steel \cite{tears_of_steel_movie} and Valkaama \cite{valkaama_movie} as a starting point. %TODO adicionar citações dos filmes e links para páginas dos projetos (coloquei só dos projetos, precisa ter literalmente do filme?
+We wanted a dataset made of open source content, with permissive licenses. After some research, we decided to use the open source movies Tears of Steel \cite{tears_of_steel_movie} and Valkaama \cite{valkaama_movie} as a starting point.
 
 To split the movies into independent scenes, two strategies were employed. We created a program to compute the structural similarity index (SSIM) between each pair of frames and, whenever the SSIM was high, we assumed a new scene was starting. The SSIM is similar to the simpler, less robust mean squared error (MSE) metric, except it's more resistant to noise and compression artifacts.
 
@@ -276,7 +269,7 @@ In subsequent models, we employed the strategy of doing small changes, retrainin
 \label{keeping_state}
 
 We focused efforts on stateful models to maintain consistency between frames. We chose to implement a simple stateful strategy, by feeding the network with information from its execution in the previous frame. Our model can compute its persistent state using \textit{only the previous frame}, not requiring a lengthy window of past frames. Complex stateful architectures and gates, such as LSTM networks %TODO cite
-, were dismissed for being hard and slow to train. Furthermore, we wanted our model to be fast and simple during runtime, so that it could be applied in real time. Other research in the area %TODO cite MSFT consistent style transfer
+, were dismissed for being hard and slow to train. Furthermore, we wanted our model to be fast and simple during runtime, so that it could be applied in real time. Other research in the area \cite{MSFT_transfer}
 shows that short-term information propagated frame-to-frame can generate long-term consistency in a convincing matter.
 
 Our architectural choices imply that our model has some limitations. It is incapable of "remembering" the color of objects, should they temporarily leave the screen and then return.
@@ -384,8 +377,7 @@ The ImageNet images created a much harder dataset, with a lot of variation, henc
 
 Implementing a stateful model, capable of maintaining consistency between video frames, was our main goal. As mentioned in \ref{keeping_state}, we chose a fast, simple stateful architecture.
 
-Our architecture is based on , %TODO cite MSFT Coherent Online Video Style Transfer
-which uses a similar architecture to achieve coherent style transfer (avoiding flickering between frames when transfering style to a video). In this paper, the authors propose the the eencoded features to be stateful. Dense optical flow is used to track movement in the scene. For each new frame received, flow is computed using a flow regression neural network. The previous encoded features ($F_{t-1}$) are warped using classical methods to generate ($F_t'$). $F_t$, the current encoded features, is generated by feeding forward the current frame. Knowing that consecutive frames with an easy mapping between them (without occlusions or motion discontinuities) generate well-behaved flow and can be easily warped to form the next frame, the authors compare $F_t'$ to $F_t$. If they are similar, the warped features from the last frame ($F_t'$) can be reused; if they are different, there is likely occlusion, appearance of new objects or motion discontinuities in the new frame, and new colors are generated based on the new frame's encoded features ($F_t$).
+Our architecture is based on \cite{MSFT_transfer}, which uses a similar architecture to achieve coherent style transfer (avoiding flickering between frames when transfering style to a video). In this paper, the authors propose the the eencoded features to be stateful. Dense optical flow is used to track movement in the scene. For each new frame received, flow is computed using a flow regression neural network. The previous encoded features ($F_{t-1}$) are warped using classical methods to generate ($F_t'$). $F_t$, the current encoded features, is generated by feeding forward the current frame. Knowing that consecutive frames with an easy mapping between them (without occlusions or motion discontinuities) generate well-behaved flow and can be easily warped to form the next frame, the authors compare $F_t'$ to $F_t$. If they are similar, the warped features from the last frame ($F_t'$) can be reused; if they are different, there is likely occlusion, appearance of new objects or motion discontinuities in the new frame, and new colors are generated based on the new frame's encoded features ($F_t$).
 
 The comparison between $F_t'$ and $F_t$ is done by subtracting them from one another, then feeding the difference into a small network, used to regress a mask in [0, 1] range. Values close to 1 favor the use of $F_t'$, while values close to 0 favor $F_t$. $F_t'$ and $F_t$ are linearly interpolated using the mask values.
 
@@ -476,7 +468,7 @@ One of the main results observed in figure \ref{fig:fool_collage} was the effici
 %TODO image of stuff going right and wrong in terms of vegetation vs inside
 
 Improvements would also be likely if we used a neural network for dense optical flow estimation instead of the Lucas-Kanade method. An intermediate neural network for dense optical flow could be trained end-to-end with the rest of the network and possibly achieve better global results. Currently, there are a few options for fast optical flow estimation in deep learning, and our network would likely remain usable in real time. Some examples of these options were observed in Ruder \textit{et al.}\cite{Ruder2016}, such as Revaud \textit{et al.} \cite{epicflow} and Weinzaepfel \textit{et al.} \cite{deepflow}.
-%TODO: citar transf. de estilo Microsoft
+%TODO: citar transf. de estilo Microsoft (precisa mesmo?)
 
 
 
