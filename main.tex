@@ -95,19 +95,14 @@ The first fully-automated technique created was developed by Cheng \textit{et al
 where a deep neural network (DNN) is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
 
 
-Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks.
 %TODO: citar CNNs (Larsson, Lizuka). Focar no colorful
-The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}
+Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks. The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}, making use of end to end Convolutional Neural Networks (CNNs) in an encoder-decoder fashion.
 
-%TODO: talvez inlcuir Learning Large-Scale Automatic Image Colorization como referencia
-%TODO: Importar nossos resumos do Mendeley
 
-%1) Levantamento bibliográfico em bases de dados nacionais e internacionais, a
-%partir de palavras-chave em português e inglês;
+%pensando/tentando colocar mais teoria nessa parte, por ser estado da arte/mais relevante
 
-%2) Busca pelos textos completos dos trabalhos selecionados no levantamento;
-
-%3) Leitura e fichamento (resumo analítico) dos trabalhos relevantes. É imprescindível anotar os dados dos documentos consultados, para posterior citação e referência;
+%TODO: talvez incluir Learning Large-Scale Automatic Image Colorization como referencia
+%TODO: Importar nossos resumos do Mendeley (a principio check)
 
 %4) Cruzamento de informações e citações de modo a elencar um quadro de autores sobre o assunto, alinhados com o ponto de vista do pesquisador;
 
@@ -122,10 +117,23 @@ We adopted four main phases of development: study and choice of existent machine
 \section{Conceptual aspects} \label{sec:Concept}
 Neural networks for colorization can be divided in two broad categories: those that require inputs from the user, and those that use a automated process. In both cases, the most modern approaches use Convolutional Neural Networks (CNN) to leverage different image characteristics, and use those patterns to identify and separate objects in the image and colorize them accordingly. Other approaches are possible, for example through the use of self organizing maps alongside neural networks as shown in Richart \textit{et al.} \cite{Richart_som_nn}; but for the purposes of this monograph we will focus in CNN-based algorithms.
 
+A CNN is described by the size and the number of its maps, kernel sizes, striding factors, and the connection table \cite{Ciresan2011}. Each layer in the network has a number of equally-sized feature maps. To these maps, a kernel is applied, computing the convolution between the filter and the input. This kernel is then applied throughout the map according to the defined striding factor for the available regions of the map. The result of each convolution act as the receptive fields for the neurons in the layer, each having its distinct receptive field.
+%TODO: diagrama de exemplo de CNN?
+%TODO:encoder-decoder
+
 Fully convolutional DNNs were used throughout this work to take advantage of its space invariance and local correlation between pixels in an image.
+%TODO: talvez explicar melhor DNNs, falando um pouco porque não foi o foco
+
+Another important aspect in image processing regards the choice of color space, as each one carries advantages and disadvantages. It's possible to organize existing color spaces in three categories \cite{colorspace}:
+\begin{itemize}
+    \item HVS (Human Visual System) based: these types of spaces, such as the RGB and HSV color spaces, leverage characteristics of the human biology and color processing mechanisms in order to create their color spaces. They  try to emulate the spectrum visible to the human eye, and each specific color space might treat other aspects of color (e.g. brightness, saturation) as secondary. These color spaces, although intuitive to work with, have inherent problems regarding device dependency, discontinuities in the color space and discrepancies between computed lighting and perceived lighting.
+    \item Application Specific: certain color spaces, such as the CMY(K) and YUV color spaces, were created to attend determined demands in applications. The YUV color space, for instance, was created to ensure that color TVs could be implemented while keeping broadcasts compliant with older, luminescence-based models. These color spaces can present interesting properties relevant to image processing. For instance, Cheng \textit{et al.} \cite{Cheng2015} used the YUV color space as it minimizes the correlation between each component of the color space.
+    %TODO: porque isso foi relevante pro Cheng? è relevante colocar porque foi relevante pro Cheng?
+    \item  CIE based: these color spaces, including CIE XYZ and CIE L*a*b*, are defined by the International Commission on Illumination (CIE is the initials for the french name of the commission),  and are focused on being device independent while keeping a strong correlation with the human perception. These characteristics make it a good system for applications that work with color without or with little input from the user.
+\end{itemize}
 
 \subsection{Tools and technologies}
-Tools, languages and technologies are mentioned throughout the monograph. The project is written in Python, using the Keras framework with the Tensorflow back-end. In addition, the OpenCV and Numpy libraries are also used. A small summary of technical tools and their usage is:
+The project is written in Python, using the Keras framework with the Tensorflow back-end. In addition, the OpenCV and Numpy libraries are also used. Lastly, we used CUDA and Docker as supporting technologies. A small summary of technical tools and their usage is:
 
 \begin{table}[H]
     \centering
@@ -164,7 +172,7 @@ We also ran a histogram analysis on the pixel values of each frame and discarded
 
 We implemented a program to parse the dataset and run both analysis in OpenCV. The result was almost flawless. A few scenes containing too fast movement yielded a high SSIM and were mistakenly cut into multiple scenes. They had to be manually inspected and fixed. After manual inspection, the dataset had 142753 frames in 836 distinct scenes. This small dataset was used as a starting point.
 
-The dataset structure was exported to files describing ranges of frames corresponding to each scene. This metadata was written in JSON format to make re-creation of the dataset easier in other machines. It's avaiable on https://github.com/ColorMotion/Dataset.  %TODO trocar por citacao
+The dataset structure was exported to files describing ranges of frames corresponding to each scene. This metadata was written in JSON format to make re-creation of the dataset easier in other machines. It's avaiable on \cite{colormotion_dataset}.
 
 \section{Baseline model}
 
@@ -179,7 +187,7 @@ The architecture implements an encoder-decoder architecture with skip connection
 \label{colorful_architecture_paper}
 \end{figure}
 
-Each conv layer is a block of 2 or 3 repeated convolutional layers with Rectified Linear Unit (ReLU) activation, followed by a batch normalization layer. No pooling layers are involved and changes in resolution are achieved through spatial downsampling or upsampling between convolutional blocks through strided convolutions and strided transposed convolutions.
+Each convolutional layer is a block of 2 or 3 repeated convolutional layers with Rectified Linear Unit (ReLU) activation, followed by a batch normalization layer. No pooling layers are involved and changes in resolution are achieved through spatial downsampling or upsampling between convolutional blocks through strided convolutions and strided transposed convolutions.
 
 To enlarge the receptive field of convolutions with encoded features and empower the network to detect larger features, encoded features go through dilated convolutions.
 
@@ -192,8 +200,8 @@ The objective function used in the baseline model is the mean squared error (MSE
 We prepared an environment for training in the cloud. GPUs available in servers are more powerful than the ones we own and have more RAM to cope with large models. The chosen cloud provider was Paperspace %TODO cite https://www.paperspace.com/
 due to its lower cost when compared to other providers.
 
-A Docker container was created so we could prepare the environment and easily port it to other machines. The environment can be found at , %TODO cite https://github.com/ColorMotion/ColorMotion-docker
-and contains NVIDIA CUDA libraries, Keras, TensorFlow, Python, and other project dependencies. The container is run with nvidia-docker, %TODO cite https://github.com/NVIDIA/nvidia-docker
+A Docker container was created so we could prepare the environment and easily port it to other machines. The environment can be found at \cite{colormotion_docker},
+and contains NVIDIA CUDA libraries, Keras, TensorFlow, Python, and other project dependencies. The container is run with nvidia-docker \cite{nvidia_docker},
 a project that allows containers to access NVIDIA GPUs so that CUDA applications can be containerized.
 
 \subsection{Implementation and training}
