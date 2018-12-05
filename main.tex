@@ -72,7 +72,7 @@ Our work automates a manual, boring and expensive process: professional picture 
 We take colorization of videos to be an extension of the colorization of images. We propose the use of state-of-the-art machine learning algorithms to colorize videos, prioritizing methods to maintain consistency of colors between frames in a scene whilst correctly colorizing new objects in a frame and detecting frames associated with a new scene. Our base model architecture is heavily based on previous image colorization work, with added state and an intermediate dense optical flow step. The intermediate dense optical flow step using the Lucas-Kanade method makes the model non-differentiable and, thus, not an end to end trainable CNN; however, we achieve good results training the encoder and decoder separately.
 
 \section{Evaluation}
-Results are trained on large scale data using open source videos, personal videos collected by the authors, and ImageNet images augmented to have artificial motion. %TODO insert loss imformation
+Results are trained on large scale data using open source videos, personal videos collected by the authors, and ImageNet images augmented to have artificial motion. %TODO insert loss information
 The results are then tested on people: Volunteers were asked to rate scenes as original or computer colorized, so we can have a metric on how believable the colorization is.
 
 \section{Justification}
@@ -307,13 +307,21 @@ Using a GTX1080 consumer level card, streaming the frames one by one (without ba
 %O modelo final obteve 32ms/quadro em uma placa de nível de consumidor (NVIDIA GTX1080) com batches unitários, possuia 34051138 parâmetros treináveis, e após serializado ocupava 390MB. Após otimização (remoção de camadas e pesos pouco influentes pelo método Average Percentage of Zeros - APoZ) e uso de batches de 8 frames, obtivemos o desempenho de 28ms/quadro, com 28879168 parâmetros treináveis, e 111MB. O modelo é aplicável em fluxos de vídeo em tempo real.
 
 \chapter{Results}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth+20pt]{fool_collage}
+\caption{Collage with percentage of users fooled}
+\label{fool_collage}
+\end{figure}
+
 \section{Comparison to competing methods}
 
 %TODO
 
 \section{User tests}
 %TODO some images
-In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos are scaled to 256X256 resolution. 0.008\% of the original a*b* values were used as guidance (an average of 5 pixels per frame). The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}. 110 videos were shown in total.
+In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos are scaled to 256X256 resolution. 0.008\% of the original a*b* values were used as guidance (an average of 5 pixels per frame). The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}. Videos were watched 165 times in total.
 
 \begin{table}[H]
 \centering
