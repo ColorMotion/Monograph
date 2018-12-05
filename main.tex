@@ -1,536 +1,532 @@
 \documentclass[12pt,openright,oneside,a4paper,english]{abntex2}
-\selectlanguage{english}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{capa-epusp-abntex2/capa-epusp-abntex2}  % ver https://github.com/brunocfp/capa-epusp-abntex2/blob/master/README.md
-% Folha de estilo: http://www.poli.usp.br/bibliotecas/servicos/publicacoes-online.html
-% http://pro.poli.usp.br/wp-content/uploads/2012/04/NGTF2017.pdf
-% http://www.poli.usp.br/images/stories/media/download/bibliotecas/DiretrizesTesesDissertacoes.pdf
-% http://sites.poli.usp.br/d/pme2599/Documentos/Diretrizes%20de%20elabora%C3%A7%C3%A3o%20do%20trabalho%20final.pdf
-\usepackage[alf,abnt-repeated-author-omit=yes]{abntex2cite}
-\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
-\usepackage{tabularx}
-\usepackage{float}
-\graphicspath{{./images/}}
+    \selectlanguage{english}
+    \usepackage[utf8]{inputenc}
+    \usepackage{graphicx}
+    \usepackage{capa-epusp-abntex2/capa-epusp-abntex2}  % ver https://github.com/brunocfp/capa-epusp-abntex2/blob/master/README.md
+    % Folha de estilo: http://www.poli.usp.br/bibliotecas/servicos/publicacoes-online.html
+    % http://pro.poli.usp.br/wp-content/uploads/2012/04/NGTF2017.pdf
+    % http://www.poli.usp.br/images/stories/media/download/bibliotecas/DiretrizesTesesDissertacoes.pdf
+    % http://sites.poli.usp.br/d/pme2599/Documentos/Diretrizes%20de%20elabora%C3%A7%C3%A3o%20do%20trabalho%20final.pdf
+    \usepackage[alf,abnt-repeated-author-omit=yes]{abntex2cite}
+    %\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+    \usepackage{float}
+    \usepackage[acronym]{glossaries}
+    %\usepackage{fancyhdr}
+    %\rhead{\thepage}
+    \makenoidxglossaries
+    \input{glossary.tex}
+    %para usar glossario:
+    %\acrfull{api}, \acrshort{api}, \acrlong{api}
+    \graphicspath{{./images/}}
 
-\author{TIAGO KOJI CASTRO SHIBATA\\
-HENRIQUE CASSIANO SOUZA BARROS\\
-VICTORIA AKINA TANAKA}
-\orientador{BRUNO DE CARVALHO ALBERTINI}
-\areaconcentracao{Computer Engineering}
-\preambulo{Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo}
-\title{ColorMotion: Automatic video colorization}
-\date{São Paulo\\(December 2018)}
+    \author{TIAGO KOJI CASTRO SHIBATA\\
+    HENRIQUE CASSIANO SOUZA BARROS\\
+    VICTORIA AKINA TANAKA}
+    \orientador{BRUNO DE CARVALHO ALBERTINI}
+    \areaconcentracao{Computer Engineering}
+    \preambulo{Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo}
+    \title{ColorMotion: Automatic video colorization}
+    \date{São Paulo\\(December 2018)}
+    \pagenumbering{arabic}
 
-\begin{document}
-\begin{otherlanguage}{english}
+    \begin{document}
+    \begin{otherlanguage}{english}
 
-\imprimircapa
-\imprimirfalsafolhaderosto
-\imprimirfolhaderosto
+    \imprimircapa
+    \imprimirfalsafolhaderosto
+    \imprimirfolhaderosto
 
-% ========== Folha de assinaturas (opcional) ==========
-\begin{folhadeaprovacao}
-\noindent
-Nome: SHIBATA, Tiago Koji Castro; BARROS, Henrique Cassiano Souza; TANAKA, Victoria Akina
+    % ========== Folha de assinaturas (opcional) ==========
+    \begin{folhadeaprovacao}
+    \noindent
+    Nome: SHIBATA, Tiago Koji Castro; BARROS, Henrique Cassiano Souza; TANAKA, Victoria Akina
 
-\noindent
-Title: ColorMotion: Automatic video colorization
+    \noindent
+    Title: ColorMotion: Automatic video colorization
 
-\vspace{1cm}
-\hspace{.2\textwidth} % posicionando a minipage
-\begin{minipage}{.75\textwidth}
-    \begin{sloppypar}
-        Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo \\[0.3cm]
-    \end{sloppypar}
-\end{minipage}
+    \vspace{1cm}
+    \hspace{.2\textwidth} % posicionando a minipage
+    \begin{minipage}{.75\textwidth}
+        \begin{sloppypar}
+            Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo \\[0.3cm]
+        \end{sloppypar}
+    \end{minipage}
 
-%\noindent
-%Aprovada em:
-\noindent
-Monograph submitted to the department in: \\
+    %\noindent
+    %Aprovada em:
+    \noindent
+    Monograph submitted to the department in: \\
 
-\begin{center}
-Authors:
-\end{center}
+    \begin{center}
+    Authors:
+    \end{center}
 
-\assinatura{Prof. Dr. Bruno de Carvalho Albertini (Supervisor)}
-\hspace{5cm}
-\assinatura{Tiago Castro Koji Shibata \\(Student)}
-\hspace{5cm}
-\assinatura{Henrique Cassiano Souza Barros \\(Student)}
-\hspace{5cm}
-\assinatura{Victoria Akina Tanaka \\(Student)}
+    \assinatura{Prof. Dr. Bruno de Carvalho Albertini (Supervisor)}
+    \hspace{5cm}
+    \assinatura{Tiago Castro Koji Shibata \\(Student)}
+    \hspace{5cm}
+    \assinatura{Henrique Cassiano Souza Barros \\(Student)}
+    \hspace{5cm}
+    \assinatura{Victoria Akina Tanaka \\(Student)}
 
-\end{folhadeaprovacao}
+    \end{folhadeaprovacao}
 
-\begin{agradecimentos}
-Agradeço à minha cachorra. S2 Maggie
+    \begin{agradecimentos}
+    Agradeço à minha cachorra. S2 Maggie
 
-\end{agradecimentos}
+    \end{agradecimentos}
 
-\begin{epigrafe}
-\begin{flushright}
-\vspace*{\fill}
+    \begin{epigrafe}
+    \begin{flushright}
+    \vspace*{\fill}
 
-\textit{``It is the supreme art of the teacher to awaken joy in creative expression and knowledge``}\\
-(Albert Einstein)
-\par\end{flushright}\end{epigrafe} %citation needed (yes. really.)
+    \textit{``It is the supreme art of the teacher to awaken joy in creative expression and knowledge``}\\
+    (Albert Einstein)
+    \par\end{flushright}\end{epigrafe} %citation needed (yes. really.)
 
-\begin{resumo}
-Given a grayscale video, this monograph proposes a method for colorization using convolutional neural networks in an encoder-decoder architecture. Unlike current image colorization models which, when applied frame by frame, create inconsistencies between frames, this model maintains state in the encoded features and learns to colorize while maintaining the colors of regions that existed on previous frames. Dense optical flow is used to track movement and propagate colors between frames. The method is user-guided in the sense that an user can input pixel colors as additional information, biasing the algorithm at multimodal color choices. Training was done on large scale datasets taken from open source videos and the ImageNet dataset, which was artificially augmented to generate frame sequences with motion.
-\vspace{\onelineskip}
+    \begin{resumo}
+    Given a grayscale video, this monograph proposes a method for colorization using convolutional neural networks in an encoder-decoder architecture. Unlike current image colorization models which, when applied frame by frame, create inconsistencies between frames, this model maintains state in the encoded features and learns to colorize while maintaining the colors of regions that existed on previous frames. Dense optical flow is used to track movement and propagate colors between frames. The method is user-guided in the sense that an user can input pixel colors as additional information, biasing the algorithm at multimodal color choices. Training was done on large scale datasets taken from open source videos and the ImageNet dataset, which was artificially augmented to generate frame sequences with motion.
+    \vspace{\onelineskip}
 
-\noindent
-\textbf{Keywords}: CNN. Colorization. Video. Restoration. Encoder-decoder.
-\end{resumo}
+    \noindent
+    \textbf{Keywords}: \acrshort{cnn}. Colorization. Video. Restoration. Encoder-decoder.
+    \end{resumo}
+    \cleardoublepage
+    \listoffigures
+    \newpage
+    \listoftables
+    \newpage
+    % ========== Listas definidas pelo usuário (opcional) ==========
+    \printnoidxglossary[type=\acronymtype, title=List of Initials and Abbreviations]
+    \newpage
+    \tableofcontents
 
-%TODO listas de gráficos, tabelas, abreviaturas e siglas, símbolos
-%DNN - Deep Neural Network
-%CNN - COnvolutional Neural Network
-%MSE - Mean Squared Error
 
-\cleardoublepage
-\listoffigures
-\newpage
-\listoftables
-\newpage
-\tableofcontents
+    \maketitle
+    \pagestyle{plain}
+    \chapter{Introduction}
+    In this monograph, we propose a method for automatic video colorization, using a machine learning-based approach.
 
-\maketitle
-\pagenumbering{arabic}
-\pagestyle{plain}
+    Previous work \cite{colorful} has used \acrshort{cnn}s trained on large-scale datasets to colorize pictures successfully. However, when applied frame by frame on videos, the predictions have inconsistencies between frames, since no state is maintained between frames and different colors are predicted on the same object after small changes in the input grayscale image.
 
-\chapter{Introduction}
-In this monograph, we propose a method for automatic video colorization, using a machine learning-based approach.
+    Since the colorization problem is multimodal, that is, multiple colors are plausible colorizations for a single object, the proposed model can also be user-guided. The algorithm can take input colors for a given object (e.g. the user can choose a t-shirt's color to be red) and will colorize the object and propagate it to following frames.
 
-Previous work \cite{colorful} has used CNNs trained on large-scale datasets to colorize pictures successfully. However, when applied frame by frame on videos, the predictions have inconsistencies between frames, since no state is maintained between frames and different colors are predicted on the same object after small changes in the input grayscale image.
+    \section{Motivation} \label{sec:Motivation}
+    The problem of colorization in the field of machine learning is one of major interest. It is not a solved problem and poses challenges unlike others, since its solutions are multimodal (the same object has multiple plausible colorizations). Previous research showed that generating believable colorizations is hard, since commonly used objective functions will infer conservatory colors in multimodal regions to minimize the loss, generating images with too low saturation to be convincing \cite{colorful}.
 
-Since the colorization problem is multimodal, that is, multiple colors are plausible colorizations for a single object, the proposed model can also be user-guided. The algorithm can take input colors for a given object (e.g. the user can choose a t-shirt's color to be red) and will colorize the object and propagate it to following frames.
+    Our work automates a manual, boring and expensive process: professional picture and video restoration services require expertise and lots of manual inputs from a trained professional. Restoration of videos costs upwards of thousands of dollars per minute: on a quote done with a prominent company in the sector, the restoration of a 9 minute video using their lower quality tier, whose colorization is less convincing, would cost USD 23000,00.
 
-\section{Motivation} \label{sec:Motivation}
-The problem of colorization in the field of machine learning is one of major interest. It is not a solved problem and poses challenges unlike others, since its solutions are multimodal (the same object has multiple plausible colorizations). Previous research showed that generating believable colorizations is hard, since commonly used objective functions will infer conservatory colors in multimodal regions to minimize the loss, generating images with too low saturation to be convincing \cite{colorful}.
+    \section{Model overview}
 
-Our work automates a manual, boring and expensive process: professional picture and video restoration services require expertise and lots of manual inputs from a trained professional. Restoration of videos costs upwards of thousands of dollars per minute: on a quote done with a prominent company in the sector, the restoration of a 9 minute video using their lower quality tier, whose colorization is less convincing, would cost USD 23000,00.
+    We take colorization of videos to be an extension of the colorization of images. We propose the use of state-of-the-art machine learning algorithms to colorize videos, prioritizing methods to maintain consistency of colors between frames in a scene whilst correctly colorizing new objects in a frame and detecting frames associated with a new scene. Our base model architecture is heavily based on previous image colorization work, with added state and an intermediate dense optical flow step. The intermediate dense optical flow step using the Lucas-Kanade method makes the model non-differentiable and, thus, not an end to end trainable \acrshort{cnn}; however, we achieve good results training the encoder and decoder separately.
 
-\section{Model overview}
+    \section{Evaluation}
+    Results are trained on large scale data using open source videos, personal videos collected by the authors, and ImageNet images augmented to have artificial motion. The results are then tested on people: Volunteers were asked to rate scenes as original or computer colorized, so we can have a metric on how believable the colorization is.
 
-We take colorization of videos to be an extension of the colorization of images. We propose the use of state-of-the-art machine learning algorithms to colorize videos, prioritizing methods to maintain consistency of colors between frames in a scene whilst correctly colorizing new objects in a frame and detecting frames associated with a new scene. Our base model architecture is heavily based on previous image colorization work, with added state and an intermediate dense optical flow step. The intermediate dense optical flow step using the Lucas-Kanade method makes the model non-differentiable and, thus, not an end to end trainable CNN; however, we achieve good results training the encoder and decoder separately.
+    \section{Justification}
+    As stated in section \ref{sec:Motivation}, the traditional process of coloring images involve manual inputs from the user and use of advanced professional editing tools.
+    %TODO: citation needed, probably something about restoring pictures
+    The same can be said to the colorization of videos, with the added difficulty of maintaining consistency through frames. Some tools can help tracking the motion and colors between frames, but the initial input and challenges involving rapidly changing scenes add to the complexity of the process. These tools often are integrated with other editing software, such as the Mocha plugin \cite{mocha} and the SilhouetteFX Suite \cite{silhoutte}, being utilized as general purpose tools, mainly for color correction.
 
-\section{Evaluation}
-Results are trained on large scale data using open source videos, personal videos collected by the authors, and ImageNet images augmented to have artificial motion. %TODO insert loss information
-The results are then tested on people: Volunteers were asked to rate scenes as original or computer colorized, so we can have a metric on how believable the colorization is.
+    \chapter{Related work}
+    Most previous works were concerned with the problem of coloring images. One traditional method to resolve this problem was inaugurated by Levin  \textit{et al.} \cite{Levin2004},
+    where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This user-based approach has received improvements in following works \cite{Huang2005} \cite{Kumar2012},
+    but the necessity of guidance through user input has always represented a compromise in the process.
 
-\section{Justification}
-As stated in section \ref{sec:Motivation}, the traditional process of coloring images involve manual inputs from the user and use of advanced professional editing tools.
-%TODO: citation needed, probably something about restoring pictures
-The same can be said to the colorization of videos, with the added difficulty of maintaining consistency through frames. Some tools can help tracking the motion and colors between frames, but the initial input and challenges involving rapidly changing scenes add to the complexity of the process. These tools often are integrated with other editing software, such as the Mocha plugin \cite{mocha} and the SilhouetteFX Suite \cite{silhoutte}, being utilized as general purpose tools, mainly for color correction.
-%TODO:citar como eles fazem o tracking?
+    One method to simplify the scribble-based approach is the reference-approach, were a reference image is supplied rather than local colors. This method is explored by Kumar \textit{et al.} \cite{Kumar2012},
+    where pixels are grouped for both feature extraction and color classification, which in turn is resolved via a randomized decision forest. The reference-approach method is also employed in other problems in the image domain, such as style-transfer \cite{Ruder2016}.
 
-\chapter{Related work}
-Most of the previous works studied were concerned with the problem of coloring images. One traditional method to resolve this problem was inaugurated by Levin  \textit{et al.} \cite{Levin2004},
-where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This user-based approach has received improvements in following works \cite{Huang2005} \cite{Kumar2012},
-but the necessity of guidance through user input has always represented a compromise in the process.
+    The first fully-automated technique created was developed by Cheng \textit{et al.} \cite{Cheng2015},
+    where a \acrfull{dnn} is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
 
-One method to simplify the scribble-based approach is the reference-approach, were a reference image is supplied rather than local colors. This method is explored by Kumar \textit{et al.} \cite{Kumar2012},
-where pixels are grouped for both feature extraction and color classification, which in turn is resolved via a randomized decision forest. The reference-approach method is also employed in other problems in the image domain, such as style-transfer \cite{Ruder2016}.
+    Most state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks \cite{Larsson2016} \cite{Iizuka2016}. The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}, making use of end-to-end \acrshort{cnn}s in an encoder-decoder fashion.
 
-The first fully-automated technique created was developed by Cheng \textit{et al.} \cite{Cheng2015},
-where a deep neural network (DNN) is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
+    %TODO: talvez incluir Learning Large-Scale Automatic Image Colorization como referencia
 
-Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks \cite{Larsson2016} \cite{Iizuka2016}. The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}, making use of end to end Convolutional Neural Networks (CNNs) in an encoder-decoder fashion.
+    \chapter{Methodology}
 
-%pensando/tentando colocar mais teoria nessa parte, por ser estado da arte/mais relevante
+    We adopted four main phases of development: study and choice of existent machine learning algorithms; development of a dataset; specification of the initial neural network architecture; adaptation the architecture to improve model performance and add new features (such as the use of recurrent architectures to maintain state and the use of dense optical flow); and collection of metrics and user feedback based on A/B tests.
 
-%TODO: talvez incluir Learning Large-Scale Automatic Image Colorization como referencia
+    \section{Conceptual aspects} \label{sec:Concept}
+    Neural networks for colorization can be divided in two broad categories: those that require inputs from the user, and those that use a automated process. In both cases, the most modern approaches use \acrshort{cnn} to leverage different image characteristics, and use those patterns to identify and separate objects in the image and colorize them accordingly. Other approaches are possible, for example through the use of self organizing maps alongside neural networks as shown in Richart \textit{et al.} \cite{Richart_som_nn}; but for the purposes of this monograph we will focus in \acrshort{cnn}-based algorithms.
 
-\chapter{Methodology}
+    A \acrshort{cnn} is described by the size and the number of its maps, kernel sizes, striding factors, and the connection table \cite{Ciresan2011}. Each layer in the network has a number of equally-sized feature maps. To these maps, a kernel is applied, computing the convolution between the filter and the input. This kernel is then applied throughout the map according to the defined striding factor for the available regions of the map. The result of each convolution act as the receptive fields for the neurons in the layer, each having its distinct receptive field.
 
-We adopted four main phases of development: study and choice of existent machine learning algorithms; development of a dataset; specification of the initial neural network architecture; adaptation the architecture to improve model performance and add new features (such as the use of recurrent architectures to maintain state and the use of dense optical flow); and collection of metrics and user feedback based on A/B tests.
+    After the convolutional layer step, it's usual to include a form of sub-sampling, in order to improve the performance of feature-extraction by reducing the spatial complexity of the input. As higher level features are detected, high resolution details become less and less important, and a more global view becomes more important. sub-sampling is an effective form of speeding up the following convolutions by reducing the spacial complexity while also enlarging the effective receptive field of the next layers.
+    %citation needed
 
-\section{Conceptual aspects} \label{sec:Concept}
-Neural networks for colorization can be divided in two broad categories: those that require inputs from the user, and those that use a automated process. In both cases, the most modern approaches use Convolutional Neural Networks (CNN) to leverage different image characteristics, and use those patterns to identify and separate objects in the image and colorize them accordingly. Other approaches are possible, for example through the use of self organizing maps alongside neural networks as shown in Richart \textit{et al.} \cite{Richart_som_nn}; but for the purposes of this monograph we will focus in CNN-based algorithms.
+    One common method to implement sub-sampling is through the use of max-pooling layers,
+    %citation needed
+    where the layer is composed of a small kernel that finds the maximum value in a sub-matrix with the same dimensions as the kernel. This kernel is applied to the input matrix, according to striding (skipping step), similarly to the stridingp defined in the convolutional layer. Sub-sampling can also be done on the convolutional layer itself. For instance, Iizuka \textit{et al.} \cite{Iizuka2016} applies a stride of 2 in order to downsample.
 
-A CNN is described by the size and the number of its maps, kernel sizes, striding factors, and the connection table \cite{Ciresan2011}. Each layer in the network has a number of equally-sized feature maps. To these maps, a kernel is applied, computing the convolution between the filter and the input. This kernel is then applied throughout the map according to the defined striding factor for the available regions of the map. The result of each convolution act as the receptive fields for the neurons in the layer, each having its distinct receptive field.
+    %TODO: diagrama de exemplo de \acrshort{cnn}? Se muito rolo referenciar a do colorful la na frente é opção - slides
+    %TODO:encoder-decoder! - sim
 
-After the convolutional layer step, it's usual to include a form of sub-sampling, in order to improve the performance of feature-extraction by reducing the spatial complexity of the input. As higher level features are detected, high resolution details become less and less important, and a more global view becomes more important. sub-sampling is an effective form of speeding up the following convolutions by reducing the spacial complexity while also enlarging the effective receptive field of the next layers.
-%citation needed
+    Fully convolutional \acrshort{dnn}s were used throughout this work to take advantage of its space invariance and local correlation between pixels in an image.
 
-One common method to implement sub-sampling is through the use of max-pooling layers,
-%citation needed
-where the layer is composed of a small kernel that finds the maximum value in a sub-matrix with the same dimensions as the kernel. This kernel is applied to the input matrix, according to striding (skipping step), similarly to the stridingp defined in the convolutional layer. Sub-sampling can also be done on the convolutional layer itself. For instance, Iizuka \textit{et al.} \cite{Iizuka2016} applies a stride of 2 in order to downsample.
+    Another important aspect in image processing regards the choice of color space, as each one carries advantages and disadvantages. It's possible to organize existing color spaces in three categories \cite{colorspace}:
+    \begin{itemize}
+        \item \acrshort{hvs} based: these types of spaces, such as the RGB and HSV color spaces, leverage characteristics of the human biology and color processing mechanisms in order to create their color spaces. They  try to emulate the spectrum visible to the human eye, and each specific color space might treat other aspects of color (e.g. brightness, saturation) as secondary. These color spaces, although intuitive to work with, have inherent problems regarding device dependency, discontinuities in the color space and discrepancies between computed lighting and perceived lighting.
+        \item Application Specific: certain color spaces, such as the CMY(K) and YUV color spaces, were created to attend determined demands in applications. The YUV color space, for instance, was created to ensure that color televisions could be implemented while keeping broadcasts compliant with older, luminescence-based models. These color spaces can present interesting properties relevant to image processing. For instance, Cheng \textit{et al.} \cite{Cheng2015} used the YUV color space as it minimizes the correlation between each component of the color space.
+        \item  \acrshort{cie} based: these color spaces, including \acrshort{cie} XYZ and \acrshort{cie} L*a*b*, are defined by the \acrfull{cie},  and are focused on being device independent while keeping a strong correlation with the human perception. These characteristics make it a good system for applications that work with color without or with little input from the user.
+    \end{itemize}
 
-%TODO: diagrama de exemplo de CNN? Se muito rolo referenciar a do colorful la na frente é opção
-%TODO:encoder-decoder?
+    \subsection{Tools and technologies}
+    The project is written in Python, using the Keras framework with the Tensorflow back-end. In addition, the OpenCV and Numpy libraries are also used. Lastly, we used CUDA and Docker as supporting technologies. A small summary of technical tools and their usage is:
 
-Fully convolutional DNNs were used throughout this work to take advantage of its space invariance and local correlation between pixels in an image.
-%TODO: talvez explicar melhor DNNs, falando um pouco porque não foi o foco?
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l|l|l}
+        Tool            & \multicolumn{2}{l|}{Usage}                 & Website             \\ \hline
+        Python          & \multicolumn{2}{p{6cm}|}{Programming language.} & https://www.python.org/ \\ \hline
+        CUDA            & \multicolumn{2}{p{6cm}|}{\acrshort{api} for \acrshort{gpu}-based network training.}  & https://developer.nvidia.com/cuda-zone \\ \hline
+        Keras           & \multicolumn{2}{p{6cm}|}{High-level \acrshort{api} for neural network development. Requires a back-end, such as TensorFlow.}  & https://keras.io/   \\ \hline
+        OpenCV          & \multicolumn{2}{p{6cm}|}{Image processing package, used for dataset processing and for its implementation of optical flow.}  & https://opencv.org/ \\ \hline
+        Numpy           & \multicolumn{2}{p{6cm}|}{Numeric processing package, used as a prerequisite for Keras and OpenCV, manipulation of OpenCV matrices and network weights.}  & http://www.numpy.org/ \\ \hline
+        Docker          &  \multicolumn{2}{p{6cm}|}{Container software used for portability and easy deployment.}  & https://www.docker.com/ \\ \hline
+        \end{tabular}
+        \label{table:tools}
+        \caption{Technical tools.}
+    \end{table}
 
-Another important aspect in image processing regards the choice of color space, as each one carries advantages and disadvantages. It's possible to organize existing color spaces in three categories \cite{colorspace}:
-\begin{itemize}
-    \item HVS (Human Visual System) based: these types of spaces, such as the RGB and HSV color spaces, leverage characteristics of the human biology and color processing mechanisms in order to create their color spaces. They  try to emulate the spectrum visible to the human eye, and each specific color space might treat other aspects of color (e.g. brightness, saturation) as secondary. These color spaces, although intuitive to work with, have inherent problems regarding device dependency, discontinuities in the color space and discrepancies between computed lighting and perceived lighting.
-    \item Application Specific: certain color spaces, such as the CMY(K) and YUV color spaces, were created to attend determined demands in applications. The YUV color space, for instance, was created to ensure that color TVs could be implemented while keeping broadcasts compliant with older, luminescence-based models. These color spaces can present interesting properties relevant to image processing. For instance, Cheng \textit{et al.} \cite{Cheng2015} used the YUV color space as it minimizes the correlation between each component of the color space.
-    %TODO: porque isso foi relevante pro Cheng? è relevante colocar porque foi relevante pro Cheng?
-    \item  CIE based: these color spaces, including CIE XYZ and CIE L*a*b*, are defined by the International Commission on Illumination (CIE is the initials for the french name of the commission),  and are focused on being device independent while keeping a strong correlation with the human perception. These characteristics make it a good system for applications that work with color without or with little input from the user.
-\end{itemize}
+    \section{Dataset}
+    \subsection{Colorspace}
+    As stated on Colorful \cite{colorful} and seen on related research, the L*a*b colorspace is most suitable for the colorization task. It's L* channel is the achromatic lightness quantity, which depends solely on the perceptually achromatic luminance. Thus, the perceptual lightness of a colorized image to a human observer appears most similar in lightness to a grayscale image when using the L*a*b* colorspace and maintaining the L* value. We use all network input images as a single channel L* image, and all color outputs are given in the a*b* colorspace.
 
-\subsection{Tools and technologies}
-The project is written in Python, using the Keras framework with the Tensorflow back-end. In addition, the OpenCV and Numpy libraries are also used. Lastly, we used CUDA and Docker as supporting technologies. A small summary of technical tools and their usage is:
-
-\begin{table}[H]
+    \begin{figure}[!htb]
     \centering
-    \begin{tabular}{l|l|l|l}
-    Tool            & \multicolumn{2}{l|}{Usage}                 & Website             \\ \hline
-    Python          & \multicolumn{2}{p{6cm}|}{Programming language.} & https://www.python.org/ \\ \hline
-    CUDA            & \multicolumn{2}{p{6cm}|}{API for GPU-based network training.}  & https://developer.nvidia.com/cuda-zone \\ \hline
-    Keras           & \multicolumn{2}{p{6cm}|}{High-level API for neural network development. Requires a back-end, such as TensorFlow.}  & https://keras.io/   \\ \hline
-    OpenCV          & \multicolumn{2}{p{6cm}|}{Image processing package, used for dataset processing and for its implementation of optical flow.}  & https://opencv.org/ \\ \hline
-    Numpy           & \multicolumn{2}{p{6cm}|}{Numeric processing package, used as a prerequisite for Keras and OpenCV, manipulation of OpenCV matrices and network weights.}  & http://www.numpy.org/ \\ \hline
-    Docker          &  \multicolumn{2}{p{6cm}|}{Container software used for portability and easy deployment.}  & https://www.docker.com/ \\ \hline
-    \end{tabular}
-    \label{table:tools}
-    \caption{Technical tools.}
-\end{table}
+    \includegraphics[width=\textwidth]{Colorspaces}
+    \caption{Comparison between different color spaces \cite{wiki_HSV}}
+    \label{hsl_hsv}
+    \end{figure}
 
-\section{Dataset}
-\subsection{Colorspace}
-As stated on Colorful \cite{colorful} and seen on related research, the L*a*b colorspace is most suitable for the colorization task. It's L* channel is the achromatic lightness quantity, which depends solely on the perceptually achromatic luminance. Thus, the perceptual lightness of a colorized image to a human observer appears most similar in lightness to a grayscale image when using the L*a*b* colorspace and maintaining the L* value. We use all network input images as a single channel L* image, and all color outputs are given in the a*b* colorspace.
+    \subsection{Processing of scenes from movies}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{Colorspaces}
-\caption{Comparison between different color spaces \cite{wiki_HSV}}
-\label{hsl_hsv}
-\end{figure}
+    We wanted a dataset made of open source content, with permissive licenses. After some research, we decided to use the open source movies Tears of Steel \cite{tears_of_steel_movie} and Valkaama \cite{valkaama_movie} as a starting point.
 
-\subsection{Processing of scenes from movies}
+    To split the movies into independent scenes, two strategies were employed. We created a program to compute the \acrfull{ssim} index between each pair of frames and, whenever the \acrshort{ssim} was high, we assumed a new scene was starting. The \acrshort{ssim} is similar to the simpler, less robust \acrfull{mse} metric, except it's more resistant to noise and compression artifacts.
 
-We wanted a dataset made of open source content, with permissive licenses. After some research, we decided to use the open source movies Tears of Steel \cite{tears_of_steel_movie} and Valkaama \cite{valkaama_movie} as a starting point.
+    We also ran a histogram analysis on the pixel values of each frame and discarded frames without enough variability. This strategy removed introduction frames, black frames from fading effects, final credits and other undesired frames whose content had very low variability.
 
-To split the movies into independent scenes, two strategies were employed. We created a program to compute the structural similarity index (SSIM) between each pair of frames and, whenever the SSIM was high, we assumed a new scene was starting. The SSIM is similar to the simpler, less robust mean squared error (MSE) metric, except it's more resistant to noise and compression artifacts.
+    We implemented a program to parse the dataset and run both analysis in OpenCV. The result was almost flawless. A few scenes containing too fast movement yielded a high \acrshort{ssim} and were mistakenly cut into multiple scenes. They had to be manually inspected and fixed. After manual inspection, the dataset had 142753 frames in 836 distinct scenes. This small dataset was used as a starting point.
 
-We also ran a histogram analysis on the pixel values of each frame and discarded frames without enough variability. This strategy removed introduction frames, black frames from fading effects, final credits and other undesired frames whose content had very low variability.
+    The dataset structure was exported to files describing ranges of frames corresponding to each scene. This metadata was written in JSON format to make re-creation of the dataset easier in other machines. It's avaiable on \cite{colormotion_dataset}.
 
-We implemented a program to parse the dataset and run both analysis in OpenCV. The result was almost flawless. A few scenes containing too fast movement yielded a high SSIM and were mistakenly cut into multiple scenes. They had to be manually inspected and fixed. After manual inspection, the dataset had 142753 frames in 836 distinct scenes. This small dataset was used as a starting point.
+    \section{Baseline model}
 
-The dataset structure was exported to files describing ranges of frames corresponding to each scene. This metadata was written in JSON format to make re-creation of the dataset easier in other machines. It's avaiable on \cite{colormotion_dataset}.
+    Our first, baseline model was created using a convolutional \acrshort{dnn}. We borrowed the same architecture used in Colorful \cite{colorful}, except we reimplemented it in Keras (the original implementation is in Caffe). Our main goal with this model was to gain familiarity with the tooling we would use in the rest of the work.
 
-\section{Baseline model}
+    The architecture implements an encoder-decoder architecture with skip connections.
 
-Our first, baseline model was created using a convolutional DNN. We borrowed the same architecture used in Colorful \cite{colorful}, except we reimplemented it in Keras (the original implementation is in Caffe). Our main goal with this model was to gain familiarity with the tooling we would use in the rest of the work.
-
-The architecture implements an encoder-decoder architecture with skip connections.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{Colorful}
-\caption{Colorful architecture (from \cite{colorful})}
-\label{colorful_architecture_paper}
-\end{figure}
-
-Each convolutional layer is a block of 2 or 3 repeated convolutional layers with Rectified Linear Unit (ReLU) activation, followed by a batch normalization layer. No pooling layers are involved and changes in resolution are achieved through spatial downsampling or upsampling between convolutional blocks through strided convolutions and strided transposed convolutions.
-
-To enlarge the receptive field of convolutions with encoded features and empower the network to detect larger features, encoded features go through dilated convolutions.
-
-\subsection{Objective function}
-
-The objective function used in the baseline model is the mean squared error (MSE) since it'e easy to use. It is given by $MSE = \frac{1}{n}\sum_{t=1}^{n}(Y_i - \hat{Y}_i)^2$, where $Y_i$ and $\hat{Y}_i$ represent the ground truth data and the network output. Related work \cite{colorful} shows that MSE is not a good objective function to create convincing colorizations, since it gives very conservative predictions in multimodal objects, creating undersaturated images. Other methods would be more suitable, such as regressing a color probability distribution function like is done in Colorful, but are harder to implement and train.
-
-\subsection{Environment}
-
-We prepared an environment for training in the cloud. GPUs available in servers are more powerful than the ones we own and have more RAM to cope with large models. The chosen cloud provider was Paperspace \cite{paperspace}
-due to its lower cost when compared to other providers.
-
-A Docker container was created so we could prepare the environment and easily port it to other machines. The environment can be found at \cite{colormotion_docker},
-and contains NVIDIA CUDA libraries, Keras, TensorFlow, Python, and other project dependencies. The container is run with nvidia-docker \cite{nvidia_docker},
-a project that allows containers to access NVIDIA GPUs so that CUDA applications can be containerized.
-
-\subsection{Implementation and training}
-
-We reimplemented the model in Keras successfully and ran it locally and remotely using the Docker container. We used Keras' utilities to show a summary of the model and plot its blocks and layer count for each block. The model graph can be seen in \ref{simple_plot_1}. Layers that were unavailable in Keras (e.g. Caffe's Scale layer) were replaced with \textit{Lambda} layers, which we implemented ourselves.
-
-The model worked and we could start training it. As is known in DNN training, starting from scratch with random weights is not recommended, because training will take a very long time to converge. Instead, a model should be initialized with trained weights (even if trained on a different domain, since low level image features are shared between most domains and can be transferred). We let it run with untrained weights just to ensure our training environment was working properly, and got an initial MSE loss oscillating around 8000. After a few epochs with the loss oscillating, we stopped the process and decided to go find trained weights for the network.
-
-The original weights were in Caffe's binary protobuf format. We could create a program to read the protobuf and export the weights, but instead we chose to use a ready-made converter. The MMdnn \cite{mmdnn} project (Model Management for DNN) is a suite of tools that includes a converter between popular formats. Unfortunately, we couldn't use the Caffe -> Keras converter directly, since it crashed whenever it found a layer that didn't have a direct Keras replacement (such as the Scale layer). Instead, we used MMdnn to convert the Caffe weights to a Numpy matrix serialized to its binary format. Since we already use OpenCV and Keras (which make heavy use of Numpy), importing the Numpy weights was easier than dealing with the original protobuf weights.
-
-After initial training, this dataset proved too small for the task in hand. In our methodology, we employed a network with a high number of parameters, which is very prone to overfitting. The network did overfit a lot in our initial tests, as can be seen by the loss MSE of 4.21 and validation MSE of 98.43 after 5600 steps \ref{simple_loss}.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{loss/Simple}
-\caption{Simple model loss}
-\label{simple_loss}
-\end{figure}
-
-\section{Improved models}
-
-In subsequent models, we employed the strategy of doing small changes, retraining based on previously trained weights, and keeping improvements. The model was kept large and we didn't focus on removing unused weights until later.
-
-\subsection{Keeping state}
-\label{keeping_state}
-
-We focused efforts on stateful models to maintain consistency between frames. We chose to implement a simple stateful strategy, by feeding the network with information from its execution in the previous frame. Our model can compute its persistent state using \textit{only the previous frame}, not requiring a lengthy window of past frames. Complex stateful architectures and gates, such as LSTM networks %TODO cite
-, were dismissed for being hard and slow to train. Furthermore, we wanted our model to be fast and simple during runtime, so that it could be applied in real time. Other research in the area \cite{MSFT_transfer}
-shows that short-term information propagated frame-to-frame can generate long-term consistency in a convincing matter.
-
-Our architectural choices imply that our model has some limitations. It is incapable of "remembering" the color of objects, should they temporarily leave the screen and then return.
-
-\subsection{Dataset}
-
-A lot of work was done in building a higher quality dataset. We changed the batch generators to generate batches of pairs of neighbouring frames, so that they could be fed to the stateful model training routines. We implemented custom batch generators that would load a pair of frames from the disk and apply random augmentations to each pair before returning them to the training routine. Data augmentation during training reduced overfitting and improved the loss marginally.
-
-The following operations were randomly applied during augmentation:
-
-\begin{table}[H]
+    \begin{figure}[!htb]
     \centering
-    \begin{tabular}{llll}
-    Transformation & Meaning               & Range          &  \\ \hline
-    theta          & Random image rotation & [-15$^{\circ}$, +15$^{\circ}$]   &  \\
-    shear          & Shear angle           & [-20$^{\circ}$, +20$^{\circ}$] &  \\ \hline
-    tx             & Translation in X      & [-12, +12]       &  \\
-    ty             & Translation in Y      & [-12, +12]       &  \\ \hline
-    zx             & Zoom in X             & [0.8, 1.1]       &  \\
-    zy             & Zoom in Y             & [0.8, 1.1]       &  \\ \hline
-    \end{tabular}
-    \label{table:augmentations}
-    \caption{Augmentations applied to pairs of frames.}
-\end{table}
+    \includegraphics[width=\textwidth]{Colorful}
+    \caption{Colorful architecture (from \cite{colorful})}
+    \label{colorful_architecture_paper}
+    \end{figure}
 
-The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in 1629 distinct scenes.
+    Each convolutional layer is a block of 2 or 3 repeated convolutional layers with \acrshort{relu} activation, followed by a batch normalization layer. No pooling layers are involved and changes in resolution are achieved through spatial downsampling or upsampling between convolutional blocks through strided convolutions and strided transposed convolutions.
 
-Lastly, when training our last model, we chose to try use ImageNet \cite{imagenet_cvpr09} data in training. Part of the ImageNet dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". We wrote scripts to download the images, ignoring any invalid server responses (many images were removed since they were posted in the dataset), check if the images are valid, and save them to disk. 1071981 valid images were downloaded.  We artificially generated flow information, simulating the movement between consecutive frames of a video.
+    To enlarge the receptive field of convolutions with encoded features and empower the network to detect larger features, encoded features go through dilated convolutions.
 
-\label{artificial_flow}
+    \subsection{Objective function}
 
-To generate artificial motion data, we took images from the ImageNet dataset and applied minimal distortions to it so that it would artificially have flow when compared to the original image. We reused our data augmentation code, except with much less aggressive changes, since changes between a pair of frames is are usually small.
+    The objective function used in the baseline model is the \acrshort{mse} since it'e easy to use. It is given by $MSE = \frac{1}{n}\sum_{t=1}^{n}(Y_i - \hat{Y}_i)^2$, where $Y_i$ and $\hat{Y}_i$ represent the ground truth data and the network output. Related work \cite{colorful} shows that \acrshort{mse} is not a good objective function to create convincing colorizations, since it gives very conservative predictions in multimodal objects, creating undersaturated images. Other methods would be more suitable, such as regressing a color probability distribution function like is done in Colorful, but are harder to implement and train.
 
-The following operations were applied to artificially generate what could be the image's previous frame, were it part of a video stream:
+    \subsection{Environment}
 
-\begin{table}[H]
+    We prepared an environment for training in the cloud. \acrshort{gpu}s available in servers are more powerful than the ones we own and have more RAM to cope with large models. The chosen cloud provider was Paperspace \cite{paperspace}
+    due to its lower cost when compared to other providers.
+
+    A Docker container was created so we could prepare the environment and easily port it to other machines. The environment can be found at \cite{colormotion_docker},
+    and contains NVIDIA CUDA libraries, Keras, TensorFlow, Python, and other project dependencies. The container is run with nvidia-docker \cite{nvidia_docker},
+    a project that allows containers to access NVIDIA \acrshort{gpu}s so that CUDA applications can be containerized.
+
+    \subsection{Implementation and training}
+
+    We reimplemented the model in Keras successfully and ran it locally and remotely using the Docker container. We used Keras' utilities to show a summary of the model and plot its blocks and layer count for each block. The model graph can be seen in \ref{simple_plot_1}. Layers that were unavailable in Keras (e.g. Caffe's Scale layer) were replaced with \textit{Lambda} layers, which we implemented ourselves.
+
+    The model worked and we could start training it. As is known in \acrshort{dnn} training, starting from scratch with random weights is not recommended, because training will take a very long time to converge. Instead, a model should be initialized with trained weights (even if trained on a different domain, since low level image features are shared between most domains and can be transferred). We let it run with untrained weights just to ensure our training environment was working properly, and got an initial \acrshort{mse} loss oscillating around 8000. After a few epochs with the loss oscillating, we stopped the process and decided to go find trained weights for the network.
+
+    The original weights were in Caffe's binary protobuf format. We could create a program to read the protobuf and export the weights, but instead we chose to use a ready-made converter. The MMdnn \cite{mmdnn} project (Model Management for \acrshort{dnn}) is a suite of tools that includes a converter between popular formats. Unfortunately, we couldn't use the Caffe -> Keras converter directly, since it crashed whenever it found a layer that didn't have a direct Keras replacement (such as the Scale layer). Instead, we used MMdnn to convert the Caffe weights to a Numpy matrix serialized to its binary format. Since we already use OpenCV and Keras (which make heavy use of Numpy), importing the Numpy weights was easier than dealing with the original protobuf weights.
+
+    After initial training, this dataset proved too small for the task in hand. In our methodology, we employed a network with a high number of parameters, which is very prone to overfitting. The network did overfit a lot in our initial tests, as can be seen by the loss \acrshort{mse} of 4.21 and validation \acrshort{mse} of 98.43 after 5600 steps \ref{simple_loss}.
+
+    \begin{figure}[!htb]
     \centering
-    \begin{tabular}{llll}
-    Transformation & Meaning               & Range          &  \\ \hline
-    theta          & Random image rotation & [-5$^{\circ}$, +5$^{\circ}$]   &  \\
-    shear          & Shear angle           & [-10$^{\circ}$, +10$^{\circ}$] &  \\ \hline
-    tx             & Translation in X      & [-4, +4]       &  \\
-    ty             & Translation in Y      & [-4, +4]       &  \\ \hline
-    zx             & Zoom in X             & [0.9, 1]       &  \\
-    zy             & Zoom in Y             & [0.9, 1]       &  \\ \hline
+    \includegraphics[width=\textwidth]{loss/Simple}
+    \caption{Simple model loss}
+    \label{simple_loss}
+    \end{figure}
+
+    \section{Improved models}
+
+    In subsequent models, we employed the strategy of doing small changes, retraining based on previously trained weights, and keeping improvements. The model was kept large and we didn't focus on removing unused weights until later.
+
+    \subsection{Keeping state}
+    \label{keeping_state}
+
+    We focused efforts on stateful models to maintain consistency between frames. We chose to implement a simple stateful strategy, by feeding the network with information from its execution in the previous frame. Our model can compute its persistent state using \textit{only the previous frame}, not requiring a lengthy window of past frames. Complex stateful architectures and gates, such as \acrshort{lstm} networks \cite{lstm}, were dismissed for being hard and slow to train. Furthermore, we wanted our model to be fast and simple during runtime, so that it could be applied in real time. Other research in the area \cite{MSFT_transfer}
+    shows that short-term information propagated frame-to-frame can generate long-term consistency in a convincing matter.
+
+    Our architectural choices imply that our model has some limitations. It is incapable of "remembering" the color of objects, should they temporarily leave the screen and then return.
+
+    \subsection{Dataset}
+
+    A lot of work was done in building a higher quality dataset. We changed the batch generators to generate batches of pairs of neighbouring frames, so that they could be fed to the stateful model training routines. We implemented custom batch generators that would load a pair of frames from the disk and apply random augmentations to each pair before returning them to the training routine. Data augmentation during training reduced overfitting and improved the loss marginally.
+
+    The following operations were randomly applied during augmentation:
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{llll}
+        Transformation & Meaning               & Range          &  \\ \hline
+        theta          & Random image rotation & [-15$^{\circ}$, +15$^{\circ}$]   &  \\
+        shear          & Shear angle           & [-20$^{\circ}$, +20$^{\circ}$] &  \\ \hline
+        tx             & Translation in X      & [-12, +12]       &  \\
+        ty             & Translation in Y      & [-12, +12]       &  \\ \hline
+        zx             & Zoom in X             & [0.8, 1.1]       &  \\
+        zy             & Zoom in Y             & [0.8, 1.1]       &  \\ \hline
+        \end{tabular}
+        \label{table:augmentations}
+        \caption{Augmentations applied to pairs of frames.}
+    \end{table}
+
+    The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in 1629 distinct scenes.
+
+    Lastly, when training our last model, we chose to try use ImageNet \cite{imagenet_cvpr09} data in training. Part of the ImageNet dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". We wrote scripts to download the images, ignoring any invalid server responses (many images were removed since they were posted in the dataset), check if the images are valid, and save them to disk. 1071981 valid images were downloaded.  We artificially generated flow information, simulating the movement between consecutive frames of a video.
+
+    \label{artificial_flow}
+
+    To generate artificial motion data, we took images from the ImageNet dataset and applied minimal distortions to it so that it would artificially have flow when compared to the original image. We reused our data augmentation code, except with much less aggressive changes, since changes between a pair of frames is are usually small.
+
+    The following operations were applied to artificially generate what could be the image's previous frame, were it part of a video stream:
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{llll}
+        Transformation & Meaning               & Range          &  \\ \hline
+        theta          & Random image rotation & [-5$^{\circ}$, +5$^{\circ}$]   &  \\
+        shear          & Shear angle           & [-10$^{\circ}$, +10$^{\circ}$] &  \\ \hline
+        tx             & Translation in X      & [-4, +4]       &  \\
+        ty             & Translation in Y      & [-4, +4]       &  \\ \hline
+        zx             & Zoom in X             & [0.9, 1]       &  \\
+        zy             & Zoom in Y             & [0.9, 1]       &  \\ \hline
+        \end{tabular}
+        \label{table:augmentations_imagenet}
+        \caption{Augmentations used to generate artificial flow in ImageNet images.}
+    \end{table}
+
+
+    %TODO document augmentation. TODO show reduced overfitting, show loss curves.
+
+    % \subsection{Choice of algorithm}
+    % Like stated on section \ref{sec:Concept}, the
+
+    %TODO: descrever arquitetura
+
+    %TODO: descrever interpolação de features encodadas p/ manter estado do frame
+
+    %TODO: descrever função de perda
+
+    %TODO strategy: incremental enhancements and retraining, document importing weights from other models, document performance optimizations
+    \subsection{User guided colorization}
+    We want our algorithm to support user guided inputs to make it more powerful at multimodal color choices. The user should be able to select a color for a specific pixel, and the algorithm should use the color as a local hint, intelligently propagating it to neighbouring pixels.
+
+    Our user guided model has 3 additional input channels, containing the chosen values for a* and b*, and a binary mask representing whether to use the values (1) or ignore them (0). This setup is based on \cite{Zhang2017}.
+
+    During training, a random mask is generated with a few pixels of the ground truth data, so that the algorithm can learn to use this information for colorization. In our first test, we gave the network 5\% of the ground truth values during training. The binary mask was generated randomly with each element having a 5\% probability of being 1, and non-zero elements had their a*b* values copied to the network guidance matrices.
+
+    The network was able to learn how to copy the given a*b* data \ref{loss_5}. The final \acrshort{mse} loss was 3.9. We realized 5\% is too large of a value (equivalent to providing the color of a pixel at about every 4.5x4.5 pixels in the image) and used much smaller guidance in following trainings.
+
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{loss/Guided_5}
+    \caption{User guided model loss}
+    \label{loss_5}
+    \end{figure}
+
+    \subsection{User guided colorization with less guidance}
+
+    We trained the network again, but using 0.008\% guidance. In a 256x256 image, it is equivalent to giving the network around 5.2 local hints per image. At this point our dataset was still small with 142753 frames from the movies Tears of Steel and Valkaama. It was prone to overfitting didn't have a lot of variation between the training and validation sets. The lowest \acrshort{mse} validation loss achieved  was 38.7 \ref{loss_0_008}.
+
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{loss/Guided_0_008}
+    \caption{User guided model loss}
+    \label{loss_0_008}
+    \end{figure}
+
+    \subsection{User guided colorization with improved dataset}
+
+    We started working on improving the dataset. Here, we added the Pixabay videos and most ImageNet images before retraining the user guided model.
+
+    The ImageNet images created a much harder dataset, with a lot of variation, hence the loss is now higher. The final validation loss was at 46.57055 \ref{loss_0_016}.
+
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{loss/Guided_0_016}
+    \caption{User guided model loss, with larger dataset}
+    \label{loss_0_016}
+    \end{figure}
+
+    \subsection{Stateful model}
+
+    Implementing a stateful model, capable of maintaining consistency between video frames, was our main goal. As mentioned in \ref{keeping_state}, we chose a fast, simple stateful architecture.
+
+    Our architecture is based on \cite{MSFT_transfer}, which uses a similar architecture to achieve coherent style transfer (avoiding flickering between frames when transfering style to a video). In this paper, the authors propose the the eencoded features to be stateful. Dense optical flow is used to track movement in the scene. For each new frame received, flow is computed using a flow regression neural network. The previous encoded features ($F_{t-1}$) are warped using classical methods to generate ($F_t'$). $F_t$, the current encoded features, is generated by feeding forward the current frame. Knowing that consecutive frames with an easy mapping between them (without occlusions or motion discontinuities) generate well-behaved flow and can be easily warped to form the next frame, the authors compare $F_t'$ to $F_t$. If they are similar, the warped features from the last frame ($F_t'$) can be reused; if they are different, there is likely occlusion, appearance of new objects or motion discontinuities in the new frame, and new colors are generated based on the new frame's encoded features ($F_t$).
+
+    The comparison between $F_t'$ and $F_t$ is done by subtracting them from one another, then feeding the difference into a small network, used to regress a mask in [0, 1] range. Values close to 1 favor the use of $F_t'$, while values close to 0 favor $F_t$. $F_t'$ and $F_t$ are linearly interpolated using the mask values.
+
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{optical_flow_arch}
+    \caption{Stateful architecture overview \cite{MSFT_transfer}}
+    \label{optical_flow_arch}
+    \end{figure}
+
+    We implemented a similar architecture in Keras. For simplicity, we use a classical dense optical flow instead of a flow regression neural network. The authors of the original architecture did not specify their mask regression network structure; we used a two convolutional layers with kernel size 3x3 and 16/24 filters, followed by a 1x1 convolution with a single filter, which worked well for us \ref{mask_net}.
+
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth/2]{mask_network}
+    \caption{Mask regression network}
+    \label{mask_net}
+    \end{figure}
+
+    Training was made much harder due to the optical flow step in the encoded features and the need to specify the decoder inputs after running our optical flow and mask procedure. We had to split the encoder and decoder to evaluate them separately. Splitting and loading two models at once in Keras is not trivial, since the library maintains global state about the currently loaded model, and requires direct backend access. Furthermode we have used the TensorFlow backend, which by default allocates as much \acrshort{gpu} memory as possible and uses its own allocator during execution instead of gracefully requesting memory as needed.
+
+    We tried to run both models in the same process but hit many problems with Keras, which was not designed with this used case in mind. In the end we executed the encoder and decoder in separate processes using the Python \textit{multiprocessing} library to serialize data for inter-process communication. On each process we manually created a TensorFlow session with \textit{ConfigProto.gpu\_options.per\_process\_gpu\_memory\_fraction} set to a bit less than half the available \acrshort{gpu} memory and set Keras to use that session. All the communication between processes was done by storing data into Numpy multidimensional arrays and sending them with \textit{multiprocessing}.
+
+    At this point, we also implemented the generation of artificial flow from static ImageNet images described in \ref{artificial_flow}. After training, a validation loss of 41.1 was achieved \ref{loss_stateful}. We had the training loss higher that the validation loss throughout training. We attribute it to the use of augmentation and artificial flow in the ImageNet dataset: we believe our artificial transformations were more significant than the average frame-to-frame changes seen on most videos. Since the validation dataset was only populated with real videos, the training dataset with images with artificial flow became harder to predict.
+
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{loss/Stateful}
+    \caption{Stateful model loss}
+    \label{loss_stateful}
+    \end{figure}
+
+    \subsection{Optimization}
+    After these initial results, we achieved a validation \acrshort{mse} loss of 38.43.
+
+    Our initial training strategy was to start with a deep, large model and use model pruning techniques to remove layers that don't affect the result and compress the model while achieving similar performance. To this end, we applied the \acrfull{apoz} method. The method feeds the network with validation data and analyses the output of each layer. After analysing their output with many inputs, filters with overall very low activations are considered unimportant and discarded. The method is important in reducing model size; removing a filter generates a waterfall effect in the rest of the model, since the filter's weights and all weights that would connect to that filter will be discarded.
+
+    The keras-surgeon \cite{keras_surgeon} open-source package was used for pruning weights. It eases the removal of filters and all of its dependencies. Before weight pruning, the model had 34051138 trainable parameters, and 390MB when serialized. After pruning, the final network possess 28879168 treinable parameters, occupying 111MB of space.
+
+    \section{Performance}
+    %TODO specs, performance analisys
+    Using a GTX1080 consumer level card, streaming the frames one by one (without batching) leads to inference times of 32ms in the unoptimized, large, deep model. Batching multiple frames yields performance of up to 28ms/frame. These models are applicable in real-time.
+
+    A real-time demo was also created, with a GUI program capturing a video stream from a webcam, converting it to L*a*b* colorspace and running the L* channel through the network, with configurable amounts of guidance. The colorized result and the original webcam stream are shown side by side \ref{fig:webcam}.
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth+20pt]{webcam}
+    \caption{Real-time demo using a webcam \textit{(left: original stream, right: colorized stream)}}
+    \label{fig:webcam}
+    \end{figure}
+
+    \chapter{Results}
+
+    \section{Comparison to competing methods}
+
+    %TODO
+
+    \section{User tests}
+
+    In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos are scaled to 256X256 resolution. 0.008\% of the original a*b* values were used as guidance (an average of 5 pixels per frame). The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}. Videos were watched 165 times in total.
+
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l|ll}
+    \cline{2-3}
+                                        & \multicolumn{2}{l|}{\textbf{Chosen}} &                           &  \\ \cline{1-3}
+    \multicolumn{1}{|l|}{\textbf{Real}} & \textbf{No}      & \textbf{Yes}      &                           &  \\ \cline{1-4}
+    \multicolumn{1}{|l|}{\textbf{No}}   & 38.6             & 11.4              & \multicolumn{1}{l|}{50} &  \\ \cline{1-4}
+    \multicolumn{1}{|l|}{\textbf{Yes}}  & 8.6              & 41.4              & \multicolumn{1}{l|}{50} &  \\ \cline{1-4}
+                                        & 47.1             & 52.9              &                           &  \\ \cline{2-3}
     \end{tabular}
-    \label{table:augmentations_imagenet}
-    \caption{Augmentations used to generate artificial flow in ImageNet images.}
-\end{table}
+    \label{table:ABresults}
+    \caption{Results obtained after the AB tests.}
+    \end{table}
 
+    We observed that in the videos colorized by the network, \(11.4/38.6 = 29.5\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 23.5\% of the time, volunteers where fooled and chose the computer colorized version. Examples of test frames are shown in figure \ref{fig:fool_collage}, ordered by the percentage of users fooled.
 
-%TODO document augmentation. TODO show reduced overfitting, show loss curves.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth+20pt]{fool_collage}
+    \caption{Collage with percentage of users fooled}
+    \label{fig:fool_collage}
+    \end{figure}
 
-% \subsection{Choice of algorithm}
-% Like stated on section \ref{sec:Concept}, the
+    \chapter{Discussion of achieved results}
+    One of the main results observed in figure \ref{fig:fool_collage} was the efficiency of the network in reproducing external environments, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal environments with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
+    %TODO image of stuff going right and wrong in terms of vegetation vs inside
 
-%TODO: descrever arquitetura
-
-%TODO: descrever interpolação de features encodadas p/ manter estado do frame
-
-%TODO: descrever função de perda
-
-%TODO strategy: incremental enhancements and retraining, document importing weights from other models, document performance optimizations
-\subsection{User guided colorization}
-We want our algorithm to support user guided inputs to make it more powerful at multimodal color choices. The user should be able to select a color for a specific pixel, and the algorithm should use the color as a local hint, intelligently propagating it to neighbouring pixels.
-
-Our user guided model has 3 additional input channels, containing the chosen values for a* and b*, and a binary mask representing whether to use the values (1) or ignore them (0). This setup is based on \cite{Zhang2017}.
-
-During training, a random mask is generated with a few pixels of the ground truth data, so that the algorithm can learn to use this information for colorization. In our first test, we gave the network 5\% of the ground truth values during training. The binary mask was generated randomly with each element having a 5\% probability of being 1, and non-zero elements had their a*b* values copied to the network guidance matrices.
-
-The network was able to learn how to copy the given a*b* data \ref{loss_5}. The final MSE loss was 3.9. We realized 5\% is too large of a value (equivalent to providing the color of a pixel at about every 4.5x4.5 pixels in the image) and used much smaller guidance in following trainings.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{loss/Guided_5}
-\caption{User guided model loss}
-\label{loss_5}
-\end{figure}
-
-\subsection{User guided colorization with less guidance}
-
-We trained the network again, but using 0.008\% guidance. In a 256x256 image, it is equivalent to giving the network around 5.2 local hints per image. At this point our dataset was still small with 142753 frames from the movies Tears of Steel and Valkaama. It was prone to overfitting didn't have a lot of variation between the training and validation sets. The lowest MSE validation loss achieved  was 38.7 \ref{loss_0_008}.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{loss/Guided_0_008}
-\caption{User guided model loss}
-\label{loss_0_008}
-\end{figure}
-
-\subsection{User guided colorization with improved dataset}
-
-We started working on improving the dataset. Here, we added the Pixabay videos and most of the ImageNet images before retraining the user guided model.
-
-The ImageNet images created a much harder dataset, with a lot of variation, hence the loss is now higher. The final validation loss was at 46.57055 \ref{loss_0_016}.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{loss/Guided_0_016}
-\caption{User guided model loss, with larger dataset}
-\label{loss_0_016}
-\end{figure}
-
-\subsection{Stateful model}
-
-Implementing a stateful model, capable of maintaining consistency between video frames, was our main goal. As mentioned in \ref{keeping_state}, we chose a fast, simple stateful architecture.
-
-Our architecture is based on \cite{MSFT_transfer}, which uses a similar architecture to achieve coherent style transfer (avoiding flickering between frames when transfering style to a video). In this paper, the authors propose the the eencoded features to be stateful. Dense optical flow is used to track movement in the scene. For each new frame received, flow is computed using a flow regression neural network. The previous encoded features ($F_{t-1}$) are warped using classical methods to generate ($F_t'$). $F_t$, the current encoded features, is generated by feeding forward the current frame. Knowing that consecutive frames with an easy mapping between them (without occlusions or motion discontinuities) generate well-behaved flow and can be easily warped to form the next frame, the authors compare $F_t'$ to $F_t$. If they are similar, the warped features from the last frame ($F_t'$) can be reused; if they are different, there is likely occlusion, appearance of new objects or motion discontinuities in the new frame, and new colors are generated based on the new frame's encoded features ($F_t$).
-
-The comparison between $F_t'$ and $F_t$ is done by subtracting them from one another, then feeding the difference into a small network, used to regress a mask in [0, 1] range. Values close to 1 favor the use of $F_t'$, while values close to 0 favor $F_t$. $F_t'$ and $F_t$ are linearly interpolated using the mask values.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{optical_flow_arch}
-\caption{Stateful architecture overview \cite{MSFT_transfer}}
-\label{optical_flow_arch}
-\end{figure}
-
-We implemented a similar architecture in Keras. For simplicity, we use a classical dense optical flow instead of a flow regression neural network. The authors of the original architecture did not specify their mask regression network structure; we used a two convolutional layers with kernel size 3x3 and 16/24 filters, followed by a 1x1 convolution with a single filter, which worked well for us \ref{mask_net}.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth/2]{mask_network}
-\caption{Mask regression network}
-\label{mask_net}
-\end{figure}
-
-Training was made much harder due to the optical flow step in the encoded features and the need to specify the decoder inputs after running our optical flow and mask procedure. We had to split the encoder and decoder to evaluate them separately. Splitting and loading two models at once in Keras is not trivial, since the library maintains global state about the currently loaded model, and requires direct backend access. Furthermode we have used the TensorFlow backend, which by default allocates as much GPU memory as possible and uses its own allocator during execution instead of gracefully requesting memory as needed.
-
-We tried to run both models in the same process but hit many problems with Keras, which was not designed with this used case in mind. In the end we executed the encoder and decoder in separate processes using the Python \textit{multiprocessing} library to serialize data for inter-process communication. On each process we manually created a TensorFlow session with \textit{ConfigProto.gpu\_options.per\_process\_gpu\_memory\_fraction} set to a bit less than half the available GPU memory and set Keras to use that session. All the communication between processes was done by storing data into Numpy multidimensional arrays and sending them with \textit{multiprocessing}.
-
-At this point, we also implemented the generation of artificial flow from static ImageNet images described in \ref{artificial_flow}. After training, a validation loss of 41.1 was achieved \ref{loss_stateful}. We had the training loss higher that the validation loss throughout training. We attribute it to the use of augmentation and artificial flow in the ImageNet dataset: we believe our artificial transformations were more significant than the average frame-to-frame changes seen on most videos. Since the validation dataset was only populated with real videos, the training dataset with images with artificial flow became harder to predict.
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth]{loss/Stateful}
-\caption{Stateful model loss}
-\label{loss_stateful}
-\end{figure}
-
-\subsection{Optimization}
-After these initial results, we achieved a validation MSE loss of 38.43.
-
-Our initial training strategy was to start with a deep, large model and use model pruning techniques to remove layers that don't affect the result and compress the model while achieving similar performance. To this end, we applied the Average Percentage of Zeros (APoZ) method. The method feeds the network with validation data and analyses the output of each layer. After analysing their output with many inputs, filters with overall very low activations are considered unimportant and discarded. The method is important in reducing model size; removing a filter generates a waterfall effect in the rest of the model, since the filter's weights and all weights that would connect to that filter will be discarded.
-
-The keras-surgeon \cite{keras_surgeon} open-source package was used for pruning weights. It eases the removal of filters and all of its dependencies. Before weight pruning, the model had 34051138 trainable parameters, and 390MB when serialized. After pruning, the final network possess 28879168 treinable parameters, occupying 111MB of space.
-
-\section{Performance}
-%TODO specs, performance analisys
-Using a GTX1080 consumer level card, streaming the frames one by one (without batching) leads to inference times of 32ms in the unoptimized, large, deep model. Batching multiple frames yields performance of up to 28ms/frame. These models are applicable in real-time.
-
-A real-time demo was also created, with a GUI program capturing a video stream from a webcam, converting it to L*a*b* colorspace and running the L* channel through the network, with configurable amounts of guidance. The colorized result and the original webcam stream are shown side by side \ref{fig:webcam}.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth+20pt]{webcam}
-\caption{Real-time demo using a webcam \textit{(left: original stream, right: colorized stream)}}
-\label{fig:webcam}
-\end{figure}
-
-\chapter{Results}
-
-\section{Comparison to competing methods}
-
-%TODO
-
-\section{User tests}
-
-In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos are scaled to 256X256 resolution. 0.008\% of the original a*b* values were used as guidance (an average of 5 pixels per frame). The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}. Videos were watched 165 times in total.
-
-\begin{table}[H]
-\centering
-\begin{tabular}{l|l|l|ll}
-\cline{2-3}
-                                    & \multicolumn{2}{l|}{\textbf{Chosen}} &                           &  \\ \cline{1-3}
-\multicolumn{1}{|l|}{\textbf{Real}} & \textbf{No}      & \textbf{Yes}      &                           &  \\ \cline{1-4}
-\multicolumn{1}{|l|}{\textbf{No}}   & 38.6             & 11.4              & \multicolumn{1}{l|}{50} &  \\ \cline{1-4}
-\multicolumn{1}{|l|}{\textbf{Yes}}  & 8.6              & 41.4              & \multicolumn{1}{l|}{50} &  \\ \cline{1-4}
-                                    & 47.1             & 52.9              &                           &  \\ \cline{2-3}
-\end{tabular}
-\label{table:ABresults}
-\caption{Results obtained after the AB tests.}
-\end{table}
-
-We observed that in the videos colorized by the network, \(11.4/38.6 = 29.5\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 23.5\% of the time, volunteers where fooled and chose the computer colorized version. Examples of test frames are shown in figure \ref{fig:fool_collage}, ordered by the percentage of users fooled.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth+20pt]{fool_collage}
-\caption{Collage with percentage of users fooled}
-\label{fig:fool_collage}
-\end{figure}
-
-\chapter{Discussion of achieved results}
-One of the main results observed in figure \ref{fig:fool_collage} was the efficiency of the network in reproducing external environments, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal environments with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
-%TODO image of stuff going right and wrong in terms of vegetation vs inside
-
-Improvements would also be likely if we used a neural network for dense optical flow estimation instead of the Lucas-Kanade method. An intermediate neural network for dense optical flow could be trained end-to-end with the rest of the network and possibly achieve better global results. Currently, there are a few options for fast optical flow estimation in deep learning, and our network would likely remain usable in real time. Some examples of these options were observed in Ruder \textit{et al.}\cite{Ruder2016}, such as Revaud \textit{et al.} \cite{epicflow} and Weinzaepfel \textit{et al.} \cite{deepflow}.
-%TODO: citar transf. de estilo Microsoft (precisa mesmo?)
+    Improvements would also be likely if we used a neural network for dense optical flow estimation instead of the Lucas-Kanade method. An intermediate neural network for dense optical flow could be trained end-to-end with the rest of the network and possibly achieve better global results. Currently, there are a few options for fast optical flow estimation in deep learning, and our network would likely remain usable in real time. Some examples of these options were observed in Ruder \textit{et al.}\cite{Ruder2016}, such as Revaud \textit{et al.} \cite{epicflow} and Weinzaepfel \textit{et al.} \cite{deepflow}.
+    %TODO: citar transf. de estilo Microsoft (precisa mesmo?)
 
 
 
 
-\chapter{Conclusions}
-Deu bom
+    \chapter{Conclusions}
+    Deu bom
 
-%TODO \chapter{Future work}? Por enquanto colocando na discussao
-%\chapter{TODO glossary} É diferente do de siglas?
-\appendix
-\chapter{Appendix -- Simple architecture model}
+    %TODO \chapter{Future work}? Por enquanto colocando na discussao
+    %\chapter{TODO glossary} É diferente do de siglas?
+    \appendix
+    \chapter{Appendix -- Simple architecture model}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[height=\textheight]{model_plot/Simple1}
-\caption{Simple model architecture expanded - Part 1}
-\label{simple_plot_1}
-\end{figure}
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[height=\textheight]{model_plot/Simple1}
+    \caption{Simple model architecture expanded - Part 1}
+    \label{simple_plot_1}
+    \end{figure}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[height=\textheight]{model_plot/Simple2}
-\caption{Simple model architecture expanded - Part 2}
-\label{simple_plot_2}
-\end{figure}
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[height=\textheight]{model_plot/Simple2}
+    \caption{Simple model architecture expanded - Part 2}
+    \label{simple_plot_2}
+    \end{figure}
 
-\chapter{Appendix -- Guided architecture model}
+    \chapter{Appendix -- Guided architecture model}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[height=\textheight]{model_plot/Guided1}
-\caption{Guided model architecture expanded - Part 1}
-\label{guided_plot_1}
-\end{figure}
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[height=\textheight]{model_plot/Guided1}
+    \caption{Guided model architecture expanded - Part 1}
+    \label{guided_plot_1}
+    \end{figure}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[height=\textheight]{model_plot/Guided2}
-\caption{Guided model architecture expanded - Part 2}
-\label{guided_plot_2}
-\end{figure}
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[height=\textheight]{model_plot/Guided2}
+    \caption{Guided model architecture expanded - Part 2}
+    \label{guided_plot_2}
+    \end{figure}
 
-\chapter{Appendix -- Stateful architecture model}
+    \chapter{Appendix -- Stateful architecture model}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[height=\textheight]{model_plot/Stateful1}
-\caption{Stateful model architecture expanded - Part 1}
-\label{stateful_plot_1}
-\end{figure}
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[height=\textheight]{model_plot/Stateful1}
+    \caption{Stateful model architecture expanded - Part 1}
+    \label{stateful_plot_1}
+    \end{figure}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[height=\textheight]{model_plot/Stateful2}
-\caption{Stateful model architecture expanded - Part 2}
-\label{stateful_plot_2}
-\end{figure}
+    \begin{figure}[!htb]
+    \centering
+    \includegraphics[height=\textheight]{model_plot/Stateful2}
+    \caption{Stateful model architecture expanded - Part 2}
+    \label{stateful_plot_2}
+    \end{figure}
 
-\bibliographystyle{abntex2-alf}
-\bibliography{referencias.bib}
-%\printbibliography
+    \bibliographystyle{abntex2-alf}
+    \bibliography{referencias.bib}
+    %\printbibliography
 
-\end{otherlanguage}
-\end{document}
+    \end{otherlanguage}
+    \end{document}
