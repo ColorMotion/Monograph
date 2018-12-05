@@ -142,20 +142,30 @@ To split the movies into independent scenes, two strategies were employed. We cr
 
 We also ran a histogram analysis on the pixel values of each frame and discarded frames without enough variability. This strategy removed introduction frames, black frames from fading effects, final credits and other undesired frames whose content had very low variability.
 
-After running a script with both algorithms, the result was almost perfect. A few scenes containing too fast movement (yielding a high SSIM) were cut into multiple scenes and had to be manually inspected and fixed. After filtering and splitting the scenes, the dataset had 142753 frames in 836 distinct scenes. This small dataset was used as a starting point.
+We implemented a program to parse the dataset and run both analysis in OpenCV. The result was almost flawless. A few scenes containing too fast movement yielded a high SSIM and were mistakenly cut into multiple scenes. They had to be manually inspected and fixed. After manual inspection, the dataset had 142753 frames in 836 distinct scenes. This small dataset was used as a starting point.
 
 The dataset structure was exported to files describing ranges of frames corresponding to each scene. This metadata was written in JSON format to make re-creation of the dataset easier in other machines. It's avaiable on https://github.com/ColorMotion/Dataset.  %TODO trocar por citacao
 
 \section{Baseline model}
 
-Our first, baseline model was created using a convolutional DNN. We borrowed the same architecture used in Colorful \cite{colorful}, except we reimplemented it in Keras. Our main goal with this model was to gain familiarity with the tooling we would use in the rest of the work.
+Our first, baseline model was created using a convolutional DNN. We borrowed the same architecture used in Colorful \cite{colorful}, except we reimplemented it in Keras (the original implementation is in Caffe). Our main goal with this model was to gain familiarity with the tooling we would use in the rest of the work.
 
-The architecture implements an encoder-decoder architecture with skip connections. To enlarge the receptive field of convolutions with encoded features and empower the network to detect larger features, encoded features go through dilated convolutions.
-%TODO falar mais da arquitetura?
+The architecture implements an encoder-decoder architecture with skip connections.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth]{Colorful}
+\caption{Colorful architecture}
+\label{colorful_architecture_paper}
+\end{figure}
+
+Each conv layer is a block of 2 or 3 repeated convolutional layers with Rectified Linear Unit (ReLU) activation, followed by a batch normalization layer. No pooling layers are involved and changes in resolution are achieved through spatial downsampling or upsampling between convolutional blocks through strided convolutions and strided transposed convolutions.
+
+To enlarge the receptive field of convolutions with encoded features and empower the network to detect larger features, encoded features go through dilated convolutions.
 
 \subsection{Objective function}
 
-The objective function used in the baseline model is the mean squared error (MSE) since it'e easy to use. Related work \cite{colorful} shows that MSE is not a good objective function to create convincing colorizations, since it gives very conservative predictions in multimodal objects, creating undersaturated images. Other methods, such as regressing a color probability distribution function \cite{colorful}, would be more suitable, but are harder to implement and train.
+The objective function used in the baseline model is the mean squared error (MSE) since it'e easy to use. It is given by $MSE = \frac{1}{n}\sum_{t=1}^{n}(Y_i - \hat{Y}_i)^2$, where $Y_i$ and $\hat{Y}_i$ represent the ground truth data and the network output. Related work \cite{colorful} shows that MSE is not a good objective function to create convincing colorizations, since it gives very conservative predictions in multimodal objects, creating undersaturated images. Other methods would be more suitable, such as regressing a color probability distribution function like is done in Colorful, but are harder to implement and train.
 
 \subsection{Environment}
 
@@ -166,23 +176,16 @@ A Docker container was created so we could prepare the environment and easily po
 and contains NVIDIA CUDA libraries, Keras, TensorFlow, Python, and other project dependencies. The container is run with nvidia-docker, %TODO cite https://github.com/NVIDIA/nvidia-docker
 a project that allows containers to access NVIDIA GPUs so that CUDA applications can be containerized.
 
-Funcionou
-implementação OK
-Mostrar modelo do paper
-indicar modelo anexo
-Explicar Lambda
+\subsection{Implementation and training}
 
-8000 (initial loss without pretrained weights)
+We reimplemented the model in Keras successfully and ran it locally and remotely using the Docker container. We used Keras' utilities to show a summary of the model and plot its blocks and layer count for each block. The model graph can be seen in \ref{simple_plot_1}. Layers that were unavailable in Keras (e.g. Caffe's Scale layer) were replaced with \textit{Lambda} layers, which we implemented ourselves.
 
-mmtoir
+The model worked and we could start training it. As is known in DNN training, starting from scratch with random weights is not recommended, because training will take a very long time to converge. Instead, a model should be initialized with trained weights (even if trained on a different domain, since low level image features are shared between most domains and can be transferred). We let it run with untrained weights just to ensure our training environment was working properly, and got an initial MSE loss oscillating around 8000. After a few epochs with the loss oscillating, we stopped the process and decided to go find trained weights for the network.
 
-transfer
+The original weights were in Caffe's binary protobuf format. We could create a program to read the protobuf and export the weights, but instead we chose to use a ready-made converter. The MMdnn %TODO cite https://github.com/Microsoft/MMdnn
+project (Model Management for DNN) is a suite of tools that includes a converter between popular formats. Unfortunately, we couldn't use the Caffe -> Keras converter directly, since it crashed whenever it found a layer that didn't have a direct Keras replacement (such as the Scale layer). Instead, we used MMdnn to convert the Caffe weights to a Numpy matrix serialized to its binary format. Since we already use OpenCV and Keras (which make heavy use of Numpy), importing the Numpy weights was easier than dealing with the original protobuf weights.
 
-retraining
-
-%TODO inserir curvas de perda dos testes iniciais em teste/validação
-
-After initial training, this dataset proved too small for the task in hand. In our methodology, we employed a network with a high number of parameters, which is very prone to overfitting. The network did overfit a lot in our initial tests, as can be seen by the loss MSE of 4.21 and validation MSE of 98.43.
+After initial training, this dataset proved too small for the task in hand. In our methodology, we employed a network with a high number of parameters, which is very prone to overfitting. The network did overfit a lot in our initial tests, as can be seen by the loss MSE of 4.21 and validation MSE of 98.43 after 5600 steps \ref{simple_loss}.
 
 \begin{figure}[!htb]
 \centering
@@ -191,11 +194,40 @@ After initial training, this dataset proved too small for the task in hand. In o
 \label{simple_loss}
 \end{figure}
 
-Augmentation:
+\section{Improved models}
 
-%TODO document Keras augmentation
+In subsequent models, we employed the strategy of doing small changes, retraining based on previously trained weights, and keeping improvements. The model was kept large and we didn't focus on removing unused weights until later.
 
-The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in 1629 distinct scenes. Data augmentation was also implemented during training to reduce the amount of overfitting to the training dataset. Augmentation was
+\subsection{Keeping state}
+
+We focused efforts on stateful models to maintain consistency between frames. We chose to implement a simple stateful strategy, by feeding the network with information from its execution in the previous frame. Our model can compute its persistent state using \textit{only the previous frame}, not requiring a lengthy window of past frames. Complex stateful architectures and gates, such as LSTM networks %TODO cite
+, were dismissed for being hard and slow to train. Furthermore, we wanted our model to be fast and simple during runtime, so that it could be applied in real time. Other research in the area %TODO cite MSFT consistent style transfer
+shows that short-term information propagated frame-to-frame can generate long-term consistency in a convincing matter.
+
+Our architectural choices imply that our model has deep limitations. It is incapable of "remembering" the color of objects, should they temporarily leave the screen and then return.
+
+\subsection{Dataset}
+
+A lot of work was done in building a higher quality dataset. We changed the batch generators to generate batches of pairs of neighbouring frames, so that they could be fed to the stateful model training routines. We implemented custom batch generators that would load a pair of frames from the disk and apply random augmentations to each pair before returning them to the training routine. Data augmentation during training reduced overfitting and improved the loss marginally.
+
+The following operations were randomly applied during augmentation:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{llll}
+    Transformation & Meaning               & Range          &  \\ \hline
+    theta          & Random image rotation & [-15$^{\circ}$, +15$^{\circ}$]   &  \\
+    shear          & Shear angle           & [-20$^{\circ}$, +20$^{\circ}$] &  \\ \hline
+    tx             & Translation in X      & [-12, +12]       &  \\
+    ty             & Translation in Y      & [-12, +12]       &  \\ \hline
+    zx             & Zoom in X             & [0.8, 1.1]       &  \\
+    zy             & Zoom in Y             & [0.8, 1.1]       &  \\ \hline
+    \end{tabular}
+    \label{table:augmentations}
+    \caption{Augmentations.}
+\end{table}
+
+The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in 1629 distinct scenes.
 
 Lastly, part of the ImageNet \cite{imagenet_cvpr09} dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". 1071981 images were used during training of the user guided colorization model.
 %TODO document augmentation. TODO show reduced overfitting, show loss curves.
@@ -235,23 +267,23 @@ Using a GTX1080 consumer level card, streaming the frames one by one (without ba
 
 \section{User tests}
 %TODO some images
-In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos were in 256X256 resolution. 0.016\% of the original a*b* values were used as guidance. The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}.
-%TODO: quantas pessoas?
+In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos are scaled to 256X256 resolution. 0.008\% of the original a*b* values were used as guidance (an average of 5 pixels per frame). The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}. 110 videos were shown in total.
+
 \begin{table}[H]
 \centering
 \begin{tabular}{l|l|l|ll}
 \cline{2-3}
                                     & \multicolumn{2}{l|}{\textbf{Chosen}} &                           &  \\ \cline{1-3}
 \multicolumn{1}{|l|}{\textbf{Real}} & \textbf{No}      & \textbf{Yes}      &                           &  \\ \cline{1-4}
-\multicolumn{1}{|l|}{\textbf{No}}   & 40.4             & 7.9               & \multicolumn{1}{l|}{48.3} &  \\ \cline{1-4}
-\multicolumn{1}{|l|}{\textbf{Yes}}  & 6.7              & 44.9              & \multicolumn{1}{l|}{51.7} &  \\ \cline{1-4}
-                                    & 47.2             & 52.8              &                           &  \\ \cline{2-3}
+\multicolumn{1}{|l|}{\textbf{No}}   & 38.6             & 11.4              & \multicolumn{1}{l|}{50} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{\textbf{Yes}}  & 8.6              & 41.4              & \multicolumn{1}{l|}{50} &  \\ \cline{1-4}
+                                    & 47.1             & 52.9              &                           &  \\ \cline{2-3}
 \end{tabular}
 \label{table:ABresults}
 \caption{Results obtained after the AB tests.}
 \end{table}
 
-We observed that in the videos colorized by the network, \(7.9/40.4 = 19.6\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 12.9\% of the time, volunteers where fooled and chose the colorized version.
+We observed that in the videos colorized by the network, \(11.4/38.6 = 29.5\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 23.5\% of the time, volunteers where fooled and chose the computer colorized version.
 
 \chapter{Discussion of achieved results}
 One of the main results observed in the tests was the efficiency of the network in reproducing external environments, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal environments with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
@@ -276,14 +308,14 @@ Improvements would also be likely if we used a neural network for dense optical 
 \centering
 \includegraphics[height=\textheight]{model_plot/Simple1}
 \caption{Simple model architecture expanded - Part 1}
-\label{simple_plot}
+\label{simple_plot_1}
 \end{figure}
 
 \begin{figure}[!htb]
 \centering
 \includegraphics[height=\textheight]{model_plot/Simple2}
 \caption{Simple model architecture expanded - Part 2}
-\label{simple_plot}
+\label{simple_plot_2}
 \end{figure}
 
 \bibliography{referencias.bib}
