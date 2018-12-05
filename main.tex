@@ -291,6 +291,8 @@ The dataset was enlarged with videos from the free video repository Pixabay, und
 
 Lastly, when training our last model, we chose to try use ImageNet \cite{imagenet_cvpr09} data in training. Part of the ImageNet dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". We wrote scripts to download the images, ignoring any invalid server responses (many images were removed since they were posted in the dataset), check if the images are valid, and save them to disk. 1071981 valid images were downloaded.  We artificially generated flow information, simulating the movement between consecutive frames of a video.
 
+\label{artificial_flow}
+
 To generate artificial motion data, we took images from the ImageNet dataset and applied minimal distortions to it so that it would artificially have flow when compared to the original image. We reused our data augmentation code, except with much less aggressive changes, since changes between a pair of frames is are usually small.
 
 The following operations were applied to artificially generate what could be the image's previous frame, were it part of a video stream:
@@ -375,14 +377,24 @@ The comparison between $F_t'$ and $F_t$ is done by subtracting them from one ano
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{optical_flow_arch}
-\caption{Architecture overview}
+\caption{Stateful architecture overview}  %TODO cite MSFT Coherent Online Video Style Transfer
 \label{optical_flow_arch}
 \end{figure}
 
-We implemented a similar architecture in Keras. For simplicity, we use a classical dense optical flow instead of a flow regression neural network. The authors of the original architecture did not specify their mask regression network structure; we used , %TODO
-which worked well for us.
+We implemented a similar architecture in Keras. For simplicity, we use a classical dense optical flow instead of a flow regression neural network. The authors of the original architecture did not specify their mask regression network structure; we used a two convolutional layers with kernel size 3x3 and 16/24 filters, followed by a 1x1 convolution with a single filter, which worked well for us \ref{mask_net}.
 
-%TODO Explain train > validation
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth/2]{mask_network}
+\caption{Mask regression network}
+\label{mask_net}
+\end{figure}
+
+Training was made much harder due to the optical flow step in the encoded features and the need to specify the decoder inputs after running our optical flow and mask procedure. We had to split the encoder and decoder to evaluate them separately. Splitting and loading two models at once in Keras is not trivial, since the library maintains global state about the currently loaded model, and requires direct backend access. Furthermode we have used the TensorFlow backend, which by default allocates as much GPU memory as possible and uses its own allocator during execution instead of gracefully requesting memory as needed.
+
+We tried to run both models in the same process but hit many problems with Keras, which was not designed with this used case in mind. In the end we executed the encoder and decoder in separate processes using the Python \textit{multiprocessing} library to serialize data for inter-process communication. On each process we manually created a TensorFlow session with \textit{ConfigProto.gpu\_options.per\_process\_gpu\_memory\_fraction} set to a bit less than half the available GPU memory and set Keras to use that session. All the communication between processes was done by storing data into Numpy multidimensional arrays and sending them with \textit{multiprocessing}.
+
+At this point, we also implemented the generation of artificial flow from static ImageNet images described in \ref{artificial_flow}. After training, a validation loss of 41.1 was achieved \ref{loss_stateful}. We had the training loss higher that the validation loss throughout training. We attribute it to the use of augmentation and artificial flow in the ImageNet dataset: we believe our artificial transformations were more significant than the average frame-to-frame changes seen on most videos. Since the validation dataset was only populated with real videos, the training dataset with images with artificial flow became harder to predict.
 
 \begin{figure}[!htb]
 \centering
@@ -445,9 +457,6 @@ Improvements would also be likely if we used a neural network for dense optical 
 %TODO: fotos de casos onde a cor mudou pelo opt flow
 %TODO: citar redes de opt flow
 %TODO: citar transf. de estilo Microsoft
-
-
-
 
 \chapter{Conclusions}
 
