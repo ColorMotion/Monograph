@@ -1,4 +1,4 @@
-\documentclass[12pt,openright,twoside,a4paper,english]{abntex2}
+\documentclass[12pt,openright,oneside,a4paper,english]{abntex2}
 \selectlanguage{english}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -9,6 +9,7 @@
 % http://sites.poli.usp.br/d/pme2599/Documentos/Diretrizes%20de%20elabora%C3%A7%C3%A3o%20do%20trabalho%20final.pdf
 \usepackage[alf,abnt-repeated-author-omit=yes]{abntex2cite}
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage{tabularx}
 \usepackage{float}
 \graphicspath{{./images/}}
 
@@ -19,7 +20,7 @@ VICTORIA AKINA TANAKA}
 \areaconcentracao{Computer Engineering}
 \preambulo{Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo}
 \title{ColorMotion: Automatic video colorization}
-\date{São Paulo\\(November 2018)}
+\date{São Paulo\\(December 2018)}
 
 \begin{document}
 \begin{otherlanguage}{english}
@@ -28,13 +29,50 @@ VICTORIA AKINA TANAKA}
 \imprimirfalsafolhaderosto
 \imprimirfolhaderosto
 
+% ========== Folha de assinaturas (opcional) ==========
+\begin{folhadeaprovacao}
+\noindent
+Nome: SHIBATA, Tiago Koji Castro; BARROS, Henrique Cassiano Souza; TANAKA, Victoria Akina
+
+\noindent
+Title: ColorMotion: Automatic video colorization
+
+\vspace{1cm}
+\hspace{.2\textwidth} % posicionando a minipage
+\begin{minipage}{.75\textwidth}
+  \begin{espacoumemeio}
+    \begin{sloppypar}
+        Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo \\[0.3cm]
+    \end{sloppypar}
+  \end{espacoumemeio}
+\end{minipage}
+
+%\noindent
+%Aprovada em:
+\noindent
+Monograph submitted to the department in: \\
+
+\begin{center}
+Authors:
+\end{center}
+
+\assinatura{Prof. Dr. Bruno de Carvalho Albertini (Supervisor)}
+\hspace{5cm}
+\assinatura{Tiago Castro Koji Shibata \\(Orientada)}
+\hspace{5cm}
+\assinatura{Henrique Cassiano Souza Barros \\(Orientada)}
+\hspace{5cm}
+\assinatura{Victoria Akina Tanaka \\(Orientada)}
+
+\end{folhadeaprovacao}
+
 \begin{epigrafe}
 \begin{flushright}
 \vspace*{\fill}
 
 \textit{``It is the supreme art of the teacher to awaken joy in creative expression and knowledge``}\\
 (Albert Einstein)
-\par\end{flushright}\end{epigrafe}
+\par\end{flushright}\end{epigrafe} %citation needed (yes. really)
 
 \begin{resumo}
 Given a grayscale video, this monograph proposes a method for colorization using convolutional neural networks in an encoder-decoder architecture. Unlike current image colorization models which, when applied frame by frame, create inconsistencies between frames, this model maintains state in the encoded features and learns to colorize while maintaining the colors of regions that existed on previous frames. Dense optical flow is used to track movement and propagate colors between frames. The method is user-guided in the sense that an user can input pixel colors as additional information, biasing the algorithm at multimodal color choices. Training was done on large scale datasets taken from open source videos and the ImageNet dataset, which was artificially augmented to generate frame sequences with motion.
@@ -65,7 +103,7 @@ Since the colorization problem is multimodal, that is, multiple colors are plaus
 \section{Motivation} \label{sec:Motivation}
 The problem of colorization in the field of machine learning is one of major interest. It is not a solved problem and poses challenges unlike others, since its solutions are multimodal (the same object has multiple plausible colorizations). Previous research showed that generating believable colorizations is hard, since commonly used objective functions will infer conservatory colors in multimodal regions to minimize the loss, generating images with too low saturation to be convincing \cite{colorful}.
 
-Our work automates a manual, boring and expensive process: professional picture and video restoration services require expertise and lots of manual inputs from a trained professional. Restoration of videos costs upwards of thousands of dollars per minute: on a quote done with a prominent company in the sector, the restoration of a 9 minute video using their lower quality tier would cost USD 23000,00.
+Our work automates a manual, boring and expensive process: professional picture and video restoration services require expertise and lots of manual inputs from a trained professional. Restoration of videos costs upwards of thousands of dollars per minute: on a quote done with a prominent company in the sector, the restoration of a 9 minute video using their lower quality tier, whose colorization is less convincing, would cost USD 23000,00.
 
 \section{Model overview}
 
@@ -83,21 +121,16 @@ The same can be said to the colorization of videos, with the added difficulty of
 
 \chapter{Related work}
 Most of the previous works studied were concerned with the problem of coloring images. One traditional method to resolve this problem was inaugurated by Levin  \textit{et al.} \cite{Levin2004},
-where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This type of approach has received improvements in following works \cite{Kumar2012},
-%TODO: citar mais um trabalho pós-Levin
-but the necessity of user-guidance has always represented a compromise in the process.
+where colorization is achieved through quadratic cost-functions to determinate the color of neighbouring pixels, and the initial colors are given by scribbles input by the user. This user-based approach has received improvements in following works \cite{Huang2005} \cite{Kumar2012},
+but the necessity of guidance through user input has always represented a compromise in the process.
 
 One method to simplify the scribble-based approach is the reference-approach, were a reference image is supplied rather than local colors. This method is explored by Kumar \textit{et al.} \cite{Kumar2012},
-where pixels are grouped for both feature extraction and color classification, which in turn is resolved via a randomized decision forest. The reference-approach method is also employed in other problems in the image domain, such as style-transfer.
-%TODO: citar o trabalho de transferência de estilo (relevante aqui imo)
+where pixels are grouped for both feature extraction and color classification, which in turn is resolved via a randomized decision forest. The reference-approach method is also employed in other problems in the image domain, such as style-transfer \cite{Ruder2016}.
 
 The first fully-automated technique created was developed by Cheng \textit{et al.} \cite{Cheng2015},
 where a deep neural network (DNN) is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
 
-
-%TODO: citar CNNs (Larsson, Lizuka). Focar no colorful
-Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks. The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}, making use of end to end Convolutional Neural Networks (CNNs) in an encoder-decoder fashion.
-
+Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks \cite{Larsson2016} \cite{Iizuka2016}. The state-of-the-art work in the field applies methodologies such as described in Zhang \textit{et al.} \cite{colorful}, making use of end to end Convolutional Neural Networks (CNNs) in an encoder-decoder fashion.
 
 %pensando/tentando colocar mais teoria nessa parte, por ser estado da arte/mais relevante
 
@@ -122,7 +155,7 @@ A CNN is described by the size and the number of its maps, kernel sizes, stridin
 %TODO:encoder-decoder
 
 Fully convolutional DNNs were used throughout this work to take advantage of its space invariance and local correlation between pixels in an image.
-%TODO: talvez explicar melhor DNNs, falando um pouco porque não foi o foco
+%TODO: talvez explicar melhor DNNs, falando um pouco porque não foi o foco?
 
 Another important aspect in image processing regards the choice of color space, as each one carries advantages and disadvantages. It's possible to organize existing color spaces in three categories \cite{colorspace}:
 \begin{itemize}
@@ -137,14 +170,14 @@ The project is written in Python, using the Keras framework with the Tensorflow 
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{lll}
-    Tool            & Usage                 & Website             \\ \hline
-    Python          &                       &                     \\ \hline
-    CUDA            &                       &                     \\ \hline
-    Keras           &                       &                     \\ \hline
-    OpenCV          &                       &                     \\ \hline
-    Numpy           &                       &                     \\ \hline
-    Docker          &                       &                     \\ \hline
+    \begin{tabular}{l|l|l|l}
+    Tool            & \multicolumn{2}{l|}{Usage}                 & Website             \\ \hline
+    Python          & \multicolumn{2}{p{6cm}|}{Opted programming language.} & https://www.python.org/ \\ \hline
+    CUDA            & \multicolumn{2}{p{6cm}|}{API for GPU-based network training.}  & https://developer.nvidia.com/cuda-zone \\ \hline
+    Keras           & \multicolumn{2}{p{6cm}|}{API for neural network development. Implemented with Tensorflow back-end.}  & https://keras.io/   \\ \hline
+    OpenCV          & \multicolumn{2}{p{6cm}|}{Image processing package, used for dataset processing and for its implementation of optical flow.}  & https://opencv.org/ \\ \hline
+    Numpy           & \multicolumn{2}{p{6cm}|}{Array processing package, used as a prerequisite for Keras and OpenCV and as a better solution for manipulating the network weights.}  & http://www.numpy.org/ \\ \hline
+    Docker          &  \multicolumn{2}{p{6cm}|}{Container software used for portability.}  & https://www.docker.com/ \\ \hline
     \end{tabular}
     \label{table:tools}
     \caption{Technical tools.}
@@ -157,14 +190,13 @@ As stated on Colorful \cite{colorful} and seen on related research, the L*a*b co
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{Colorspaces}
-\caption{Source: https://en.wikipedia.org/wiki/HSL\_and\_HSV }
-%TODO: adicionar como citação)
+\caption{Comparison between different color spaces \cite{wiki_HSV}}
 \label{hsl_hsv}
 \end{figure}
 
 \subsection{Processing of scenes from movies}
 
-We wanted a dataset made of open source content, with permissive licenses. After some research, we decided to use the open source movies Tears of Steel and Valkaama as a starting point. %TODO adicionar citações dos filmes e links para páginas dos projetos
+We wanted a dataset made of open source content, with permissive licenses. After some research, we decided to use the open source movies Tears of Steel \cite{tears_of_steel_movie} and Valkaama \cite{valkaama_movie} as a starting point. %TODO adicionar citações dos filmes e links para páginas dos projetos (coloquei só dos projetos, precisa ter literalmente do filme?
 
 To split the movies into independent scenes, two strategies were employed. We created a program to compute the structural similarity index (SSIM) between each pair of frames and, whenever the SSIM was high, we assumed a new scene was starting. The SSIM is similar to the simpler, less robust mean squared error (MSE) metric, except it's more resistant to noise and compression artifacts.
 
@@ -197,7 +229,7 @@ The objective function used in the baseline model is the mean squared error (MSE
 
 \subsection{Environment}
 
-We prepared an environment for training in the cloud. GPUs available in servers are more powerful than the ones we own and have more RAM to cope with large models. The chosen cloud provider was Paperspace %TODO cite https://www.paperspace.com/
+We prepared an environment for training in the cloud. GPUs available in servers are more powerful than the ones we own and have more RAM to cope with large models. The chosen cloud provider was Paperspace \cite{paperspace}
 due to its lower cost when compared to other providers.
 
 A Docker container was created so we could prepare the environment and easily port it to other machines. The environment can be found at \cite{colormotion_docker},
@@ -210,8 +242,7 @@ We reimplemented the model in Keras successfully and ran it locally and remotely
 
 The model worked and we could start training it. As is known in DNN training, starting from scratch with random weights is not recommended, because training will take a very long time to converge. Instead, a model should be initialized with trained weights (even if trained on a different domain, since low level image features are shared between most domains and can be transferred). We let it run with untrained weights just to ensure our training environment was working properly, and got an initial MSE loss oscillating around 8000. After a few epochs with the loss oscillating, we stopped the process and decided to go find trained weights for the network.
 
-The original weights were in Caffe's binary protobuf format. We could create a program to read the protobuf and export the weights, but instead we chose to use a ready-made converter. The MMdnn %TODO cite https://github.com/Microsoft/MMdnn
-project (Model Management for DNN) is a suite of tools that includes a converter between popular formats. Unfortunately, we couldn't use the Caffe -> Keras converter directly, since it crashed whenever it found a layer that didn't have a direct Keras replacement (such as the Scale layer). Instead, we used MMdnn to convert the Caffe weights to a Numpy matrix serialized to its binary format. Since we already use OpenCV and Keras (which make heavy use of Numpy), importing the Numpy weights was easier than dealing with the original protobuf weights.
+The original weights were in Caffe's binary protobuf format. We could create a program to read the protobuf and export the weights, but instead we chose to use a ready-made converter. The MMdnn \cite{mmdnn} project (Model Management for DNN) is a suite of tools that includes a converter between popular formats. Unfortunately, we couldn't use the Caffe -> Keras converter directly, since it crashed whenever it found a layer that didn't have a direct Keras replacement (such as the Scale layer). Instead, we used MMdnn to convert the Caffe weights to a Numpy matrix serialized to its binary format. Since we already use OpenCV and Keras (which make heavy use of Numpy), importing the Numpy weights was easier than dealing with the original protobuf weights.
 
 After initial training, this dataset proved too small for the task in hand. In our methodology, we employed a network with a high number of parameters, which is very prone to overfitting. The network did overfit a lot in our initial tests, as can be seen by the loss MSE of 4.21 and validation MSE of 98.43 after 5600 steps \ref{simple_loss}.
 
@@ -233,7 +264,7 @@ We focused efforts on stateful models to maintain consistency between frames. We
 , were dismissed for being hard and slow to train. Furthermore, we wanted our model to be fast and simple during runtime, so that it could be applied in real time. Other research in the area %TODO cite MSFT consistent style transfer
 shows that short-term information propagated frame-to-frame can generate long-term consistency in a convincing matter.
 
-Our architectural choices imply that our model has deep limitations. It is incapable of "remembering" the color of objects, should they temporarily leave the screen and then return.
+Our architectural choices imply that our model has some limitations. It is incapable of "remembering" the color of objects, should they temporarily leave the screen and then return.
 
 \subsection{Dataset}
 
@@ -422,7 +453,7 @@ Improvements would also be likely if we used a neural network for dense optical 
 
 
 %TODO \chapter{Future work}? Por enquanto colocando na discussao
-%\chapter{TODO glossary}
+%\chapter{TODO glossary} É diferente do de siglas?
 \chapter{Appendix}
 
 \begin{figure}[!htb]
