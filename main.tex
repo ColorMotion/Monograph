@@ -91,7 +91,8 @@ where pixels are grouped for both feature extraction and color classification, w
 %TODO: citar o trabalho de transferência de estilo (relevante aqui imo)
 
 The first fully-automated technique created was developed by Cheng \textit{et al.} \cite{Cheng2015},
-where a DNN is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
+where a deep neural network (DNN) is employed with feature descriptors as the input layer and with UV channels as the output, for each pixel and in the YUV colorspace.
+
 
 Most of the state-of-the-art algorithms applied today involve the use of Convolutional Neural Networks.
 %TODO: citar CNNs (Larsson, Lizuka). Focar no colorful
@@ -123,7 +124,7 @@ Neural networks for colorization can be divided in two broad categories: those t
 Fully convolutional DNNs were used throughout this work to take advantage of its space invariance and local correlation between pixels in an image.
 
 \subsection{Tools and technologies}
-Tools, languages and technologies are mentioned throughout the monograph. A small summary of technical tools and their usage is:
+Tools, languages and technologies are mentioned throughout the monograph. The project is written in Python, using the Keras framework with the Tensorflow back-end. In addition, the OpenCV and Numpy libraries are also used. A small summary of technical tools and their usage is:
 
 \begin{table}[H]
     \centering
@@ -173,7 +174,7 @@ The architecture implements an encoder-decoder architecture with skip connection
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{Colorful}
-\caption{Colorful architecture}
+\caption{Colorful architecture (from \cite{colorful})}
 \label{colorful_architecture_paper}
 \end{figure}
 
