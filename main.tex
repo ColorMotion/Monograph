@@ -124,8 +124,7 @@ Fully convolutional DNNs were used throughout this work to take advantage of its
 
 \section{Dataset}
 \subsection{Colorspace}
-As stated on Colorful %TODO: cite
-and seen on related research, the L*a*b colorspace is most suitable for the colorization task. It's L* channel is the achromatic lightness quantity, which depends solely on the perceptually achromatic luminance. Thus, the perceptual lightness of a colorized image to a human observer appears most similar in lightness to a grayscale image when using the L*a*b* colorspace and maintaining the L* value. We use all network input images as a single channel L* image, and all color outputs are given in the a*b* colorspace.
+As stated on Colorful \cite{colorful} and seen on related research, the L*a*b colorspace is most suitable for the colorization task. It's L* channel is the achromatic lightness quantity, which depends solely on the perceptually achromatic luminance. Thus, the perceptual lightness of a colorized image to a human observer appears most similar in lightness to a grayscale image when using the L*a*b* colorspace and maintaining the L* value. We use all network input images as a single channel L* image, and all color outputs are given in the a*b* colorspace.
 
 \begin{figure}[!htb]
 \centering
@@ -255,7 +254,7 @@ In order to validate the results obtained by the network, we ran ten seconds vid
 We observed that in the videos colorized by the network, \(7.9/40.4 = 19.6\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 12.9\% of the time, volunteers where fooled and chose the colorized version.
 
 \chapter{Discussion of achieved results}
-One of the main results observed in the tests was the efficiency of the network in reproducing external enviromnents, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal enviromnents with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
+One of the main results observed in the tests was the efficiency of the network in reproducing external environments, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal environments with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
 %TODO image of stuff going right and wrong in terms of vegetation vs inside
 
 Improvements would also be likely if we used a neural network for dense optical flow estimation instead of the Lucas-Kanade method. An intermediate neural network for dense optical flow could be trained end-to-end with the rest of the network and possibly achieve better global results. Currently, there are a few options for fast optical flow estimation in deep learning, and our network would likely remain usable in real time.
