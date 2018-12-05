@@ -257,7 +257,7 @@ The following operations were randomly applied during augmentation:
 
 The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in 1629 distinct scenes.
 
-Lastly, we chose to try using ImageNet \cite{imagenet_cvpr09} in training by artificially generating flow information, simulating the process between consecutive frames of a video. Part of the ImageNet dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". 1071981 images were downloaded.
+Lastly, when training our last model, we chose to try use ImageNet \cite{imagenet_cvpr09} data in training. Part of the ImageNet dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". We wrote scripts to download the images, ignoring any invalid server responses (many images were removed since they were posted in the dataset), check if the images are valid, and save them to disk. 1071981 valid images were downloaded.  We artificially generated flow information, simulating the movement between consecutive frames of a video.
 
 To generate artificial motion data, we took images from the ImageNet dataset and applied minimal distortions to it so that it would artificially have flow when compared to the original image. We reused our data augmentation code, except with much less aggressive changes, since changes between a pair of frames is are usually small.
 
@@ -284,7 +284,6 @@ The following operations were applied to artificially generate what could be the
 % \subsection{Choice of algorithm}
 % Like stated on section \ref{sec:Concept}, the
 
-\subsection{Algorithm adaptation}
 %TODO: descrever arquitetura
 
 %TODO: descrever interpolação de features encodadas p/ manter estado do frame
@@ -292,19 +291,71 @@ The following operations were applied to artificially generate what could be the
 %TODO: descrever função de perda
 
 %TODO strategy: incremental enhancements and retraining, document importing weights from other models, document performance optimizations
+\subsection{User guided colorization}
+We want our algorithm to support user guided inputs to make it more powerful at multimodal color choices. The user should be able to select a color for a specific pixel, and the algorithm should use the color as a local hint, intelligently propagating it to neighbouring pixels.
+
+Our user guided model has 3 additional input channels, containing the chosen values for a* and b*, and a binary mask representing whether to use the values (1) or ignore them (0). This setup is based on \cite{Zhang2017}.
+
+During training, a random mask is generated with a few pixels of the ground truth data, so that the algorithm can learn to use this information for colorization. In our first test, we gave the network 5\% of the ground truth values during training. The binary mask was generated randomly with each element having a 5\% probability of being 1, and non-zero elements had their a*b* values copied to the network guidance matrices.
+
+The network was able to learn how to copy the given a*b* data \ref{loss_5}. The final MSE loss was 3.9. We realized 5\% is too large of a value (equivalent to providing the color of a pixel at about every 4.5x4.5 pixels in the image) and used much smaller guidance in following trainings.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth]{loss/Guided_5}
+\caption{User guided model loss}
+\label{loss_5}
+\end{figure}
+
+\subsection{User guided colorization with less guidance}
+
+We trained the network again, but using 0.008\% guidance. In a 256x256 image, it is equivalent to giving the network around 5.2 local hints per image. At this point our dataset was still small with 142753 frames from the movies Tears of Steel and Valkaama. It was prone to overfitting didn't have a lot of variation between the training and validation sets. The lowest MSE validation loss achieved  was 38.7 \ref{loss_0_008}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth]{loss/Guided_0_008}
+\caption{User guided model loss}
+\label{loss_0_008}
+\end{figure}
+
+\subsection{User guided colorization with improved dataset}
+
+We started working on improving the dataset. Here, we added the Pixabay videos and most of the ImageNet images before retraining the user guided model.
+
+The ImageNet images created a much harder dataset, with a lot of variation, hence the loss is now higher. The final validation loss was at 46.57055 \ref{loss_0_016}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth]{loss/Guided_0_016}
+\caption{User guided model loss, with larger dataset}
+\label{loss_0_016}
+\end{figure}
+
+\subsection{Stateful model}
+
+Implementing a stateful model, capable of maintaining consistency between video frames, was our main goal.
+
+TODO Explain train > validation
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth]{loss/Stateful}
+\caption{Stateful model loss}
+\label{loss_stateful}
+\end{figure}
 
 \subsection{Optimization}
 After these initial results, we achieved a validation MSE loss of 38.43.
-%TODO: atualizar quando resultado melhorar.
-Our initial training strategy was to start with a deep, large model and use model pruning techniques to remove layers that don't affect the result and compress the model while achieving similar performance. To this end,
+
+Our initial training strategy was to start with a deep, large model and use model pruning techniques to remove layers that don't affect the result and compress the model while achieving similar performance. To this end, we applied the Average Percentage of Zeros (APoZ) method ...
 %TODO: documentar métodos usados de poda (layer removal e APoZ).
 
-\section{System specifications}
+\section{Performance}
 %TODO specs, performance analisys
-Using a GTX1080 consumer level card, streaming the frames one by one (without batching) leads to inference times of 32ms in the unoptimized, large, deep model. Batching multiple frames yields average performance of up to 28ms/frame.
+Using a GTX1080 consumer level card, streaming the frames one by one (without batching) leads to inference times of 32ms in the unoptimized, large, deep model. Batching multiple frames yields performance of up to 28ms/frame. These models are applicable in real-time.
 
 
-%O modelo final obteve 32ms/quadro em uma placa de nível de consumidor (NVIDIA GTX1080) com batches unitários, possuia 34051138 parâmetros treináveis, e após serializado ocupava 390MB. Após otimização (remoção de camadas e pesos pouco influentes pelo método Average Percentage of Zeros - APoZ) e uso de batches de 8 frames, obtivemos o desempenho de 28ms/quadro, com 28879168 parâmetros treináveis, e 111MB. O modelo é aplicável em fluxos de vídeo em tempo real.
+%O modelo final obteve 32ms/quadro em uma placa de nível de consumidor (NVIDIA GTX1080) com batches unitários, possuia 34051138 parâmetros treináveis, e após serializado ocupava 390MB. Após otimização (remoção de camadas e pesos pouco influentes pelo método Average Percentage of Zeros - APoZ) e uso de batches de 8 frames, obtivemos o desempenho de 28ms/quadro, com 28879168 parâmetros treináveis, e 111MB.
 
 \chapter{Results}
 
