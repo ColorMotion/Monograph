@@ -40,11 +40,9 @@ Title: ColorMotion: Automatic video colorization
 \vspace{1cm}
 \hspace{.2\textwidth} % posicionando a minipage
 \begin{minipage}{.75\textwidth}
-  \begin{espacoumemeio}
     \begin{sloppypar}
         Monograph of the capstone project of the Computer Engineering bachelor - Escola Politécnica da Universidade de São Paulo \\[0.3cm]
     \end{sloppypar}
-  \end{espacoumemeio}
 \end{minipage}
 
 %\noindent
@@ -58,13 +56,18 @@ Authors:
 
 \assinatura{Prof. Dr. Bruno de Carvalho Albertini (Supervisor)}
 \hspace{5cm}
-\assinatura{Tiago Castro Koji Shibata \\(Orientada)}
+\assinatura{Tiago Castro Koji Shibata \\(Student)}
 \hspace{5cm}
-\assinatura{Henrique Cassiano Souza Barros \\(Orientada)}
+\assinatura{Henrique Cassiano Souza Barros \\(Student)}
 \hspace{5cm}
-\assinatura{Victoria Akina Tanaka \\(Orientada)}
+\assinatura{Victoria Akina Tanaka \\(Student)}
 
 \end{folhadeaprovacao}
+
+\begin{agradecimentos}
+Agradeço à minha cachorra. S2 Maggie
+
+\end{agradecimentos}
 
 \begin{epigrafe}
 \begin{flushright}
@@ -72,7 +75,7 @@ Authors:
 
 \textit{``It is the supreme art of the teacher to awaken joy in creative expression and knowledge``}\\
 (Albert Einstein)
-\par\end{flushright}\end{epigrafe} %citation needed (yes. really)
+\par\end{flushright}\end{epigrafe} %citation needed (yes. really.)
 
 \begin{resumo}
 Given a grayscale video, this monograph proposes a method for colorization using convolutional neural networks in an encoder-decoder architecture. Unlike current image colorization models which, when applied frame by frame, create inconsistencies between frames, this model maintains state in the encoded features and learns to colorize while maintaining the colors of regions that existed on previous frames. Dense optical flow is used to track movement and propagate colors between frames. The method is user-guided in the sense that an user can input pixel colors as additional information, biasing the algorithm at multimodal color choices. Training was done on large scale datasets taken from open source videos and the ImageNet dataset, which was artificially augmented to generate frame sequences with motion.
@@ -88,7 +91,10 @@ Given a grayscale video, this monograph proposes a method for colorization using
 %MSE - Mean Squared Error
 
 \cleardoublepage
-
+\listoffigures
+\newpage
+\listoftables
+\newpage
 \tableofcontents
 
 \maketitle
@@ -458,12 +464,16 @@ Improvements would also be likely if we used a neural network for dense optical 
 %TODO: citar redes de opt flow
 %TODO: citar transf. de estilo Microsoft
 
+
+
+
 \chapter{Conclusions}
 
 
 %TODO \chapter{Future work}? Por enquanto colocando na discussao
 %\chapter{TODO glossary} É diferente do de siglas?
-\chapter{Appendix}
+\appendix
+\chapter{Appendix -- Architecture model}
 
 \begin{figure}[!htb]
 \centering
