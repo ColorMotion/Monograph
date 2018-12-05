@@ -122,6 +122,24 @@ Neural networks for colorization can be divided in two broad categories: those t
 
 Fully convolutional DNNs were used throughout this work to take advantage of its space invariance and local correlation between pixels in an image.
 
+\subsection{Tools and technologies}
+Tools, languages and technologies are mentioned throughout the monograph. A small summary of technical tools and their usage is:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+    Tool            & Usage                 & Website           &  \\ \hline
+    Python          &                       &                   &  \\ \hline
+    CUDA            &                       &                   &  \\ \hline
+    Keras           &                       &                   &  \\ \hline
+    OpenCV          &                       &                   &  \\ \hline
+    Numpy           &                       &                   &  \\ \hline
+    Docker          &                       &                   &  \\ \hline
+    \end{tabular}
+    \label{table:tools}
+    \caption{Technical tools.}
+\end{table}
+
 \section{Dataset}
 \subsection{Colorspace}
 As stated on Colorful \cite{colorful} and seen on related research, the L*a*b colorspace is most suitable for the colorization task. It's L* channel is the achromatic lightness quantity, which depends solely on the perceptually achromatic luminance. Thus, the perceptual lightness of a colorized image to a human observer appears most similar in lightness to a grayscale image when using the L*a*b* colorspace and maintaining the L* value. We use all network input images as a single channel L* image, and all color outputs are given in the a*b* colorspace.
@@ -224,12 +242,33 @@ The following operations were randomly applied during augmentation:
     zy             & Zoom in Y             & [0.8, 1.1]       &  \\ \hline
     \end{tabular}
     \label{table:augmentations}
-    \caption{Augmentations.}
+    \caption{Augmentations applied to pairs of frames.}
 \end{table}
 
 The dataset was enlarged with videos from the free video repository Pixabay, under the Creative Commons licence, and from videos in the author's personal archives. The enlarged dataset has 591780 frames in 1629 distinct scenes.
 
-Lastly, part of the ImageNet \cite{imagenet_cvpr09} dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". 1071981 images were used during training of the user guided colorization model.
+Lastly, we chose to try using ImageNet \cite{imagenet_cvpr09} in training by artificially generating flow information, simulating the process between consecutive frames of a video. Part of the ImageNet dataset was downloaded from the URLs provided in the ImageNet website. The dataset has a variety of pictures belonging to one of thousands of "synonym sets". 1071981 images were downloaded.
+
+To generate artificial motion data, we took images from the ImageNet dataset and applied minimal distortions to it so that it would artificially have flow when compared to the original image. We reused our data augmentation code, except with much less aggressive changes, since changes between a pair of frames is are usually small.
+
+The following operations were applied to artificially generate what could be the image's previous frame, were it part of a video stream:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{llll}
+    Transformation & Meaning               & Range          &  \\ \hline
+    theta          & Random image rotation & [-5$^{\circ}$, +5$^{\circ}$]   &  \\
+    shear          & Shear angle           & [-10$^{\circ}$, +10$^{\circ}$] &  \\ \hline
+    tx             & Translation in X      & [-4, +4]       &  \\
+    ty             & Translation in Y      & [-4, +4]       &  \\ \hline
+    zx             & Zoom in X             & [0.9, 1]       &  \\
+    zy             & Zoom in Y             & [0.9, 1]       &  \\ \hline
+    \end{tabular}
+    \label{table:augmentations_imagenet}
+    \caption{Augmentations used to generate artificial flow in ImageNet images.}
+\end{table}
+
+
 %TODO document augmentation. TODO show reduced overfitting, show loss curves.
 
 % \subsection{Choice of algorithm}
@@ -249,9 +288,6 @@ After these initial results, we achieved a validation MSE loss of 38.43.
 %TODO: atualizar quando resultado melhorar.
 Our initial training strategy was to start with a deep, large model and use model pruning techniques to remove layers that don't affect the result and compress the model while achieving similar performance. To this end,
 %TODO: documentar métodos usados de poda (layer removal e APoZ).
-
-\section{Used technologies}
-Keras, OpenCV, numpy
 
 \section{System specifications}
 %TODO specs, performance analisys
