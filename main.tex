@@ -419,24 +419,16 @@ Our initial training strategy was to start with a deep, large model and use mode
 %TODO specs, performance analisys
 Using a GTX1080 consumer level card, streaming the frames one by one (without batching) leads to inference times of 32ms in the unoptimized, large, deep model. Batching multiple frames yields performance of up to 28ms/frame. These models are applicable in real-time.
 
-
-%O modelo final obteve 32ms/quadro em uma placa de nível de consumidor (NVIDIA GTX1080) com batches unitários, possuia 34051138 parâmetros treináveis, e após serializado ocupava 390MB. Após otimização (remoção de camadas e pesos pouco influentes pelo método Average Percentage of Zeros - APoZ) e uso de batches de 8 frames, obtivemos o desempenho de 28ms/quadro, com 28879168 parâmetros treináveis, e 111MB.
+Before weight pruning, the model had 34051138 trainable parameters, and 390MB when serialized. After pruning, the final network possess 28879168 treinable parameters, occupying 111MB of space.
 
 \chapter{Results}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\textwidth+20pt]{fool_collage}
-\caption{Collage with percentage of users fooled}
-\label{fool_collage}
-\end{figure}
 
 \section{Comparison to competing methods}
 
 %TODO
 
 \section{User tests}
-%TODO some images
+
 In order to validate the results obtained by the network, we ran ten seconds videos previously unbeknownst to the network by it. These videos are scaled to 256X256 resolution. 0.008\% of the original a*b* values were used as guidance (an average of 5 pixels per frame). The results were then shown to volunteers, who randomly received a series of original or artificially colorized videos. For each video, they were asked to determine if it was original or colorized by a computer. The results of these tests can be shown in \ref{table:ABresults}. Videos were watched 165 times in total.
 
 \begin{table}[H]
@@ -453,7 +445,14 @@ In order to validate the results obtained by the network, we ran ten seconds vid
 \caption{Results obtained after the AB tests.}
 \end{table}
 
-We observed that in the videos colorized by the network, \(11.4/38.6 = 29.5\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 23.5\% of the time, volunteers where fooled and chose the computer colorized version.
+We observed that in the videos colorized by the network, \(11.4/38.6 = 29.5\% \) of volunteers  believed that the colors shown in the clip were real. In another test, the volunteers were shown both versions side by side and were asked to identify the clip with the real colors. 23.5\% of the time, volunteers where fooled and chose the computer colorized version. Examples of test frames are shown in \ref{fig:fool_collage}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\textwidth+20pt]{fool_collage}
+\caption{Collage with percentage of users fooled}
+\label{fig:fool_collage}
+\end{figure}
 
 \chapter{Discussion of achieved results}
 One of the main results observed in the tests was the efficiency of the network in reproducing external environments, specially landscapes, wildlife and vegetation, and conversely difficulty in coloring internal environments, human crafted objects and some specific, less common objects. This can be attributed to the multimodal nature of human crafted objects and environments, which lead to conservative predictions by the network with a low a*b* value.  The ImageNet-based dataset might also be skewed, having few internal environments with multiple objects in sight. Better data collection and another objective function could help mitigate these issues.
