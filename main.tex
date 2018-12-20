@@ -170,7 +170,7 @@ where the layer is composed of a small kernel that finds the maximum value in a 
 
 \begin{figure}[!htb]
 \centering
-\caption{example of \acrshort{cnn} from River Trail documentation.}
+\caption{\acrshort{cnn} operation from River Trail documentation.}
 \includegraphics[width=\textwidth]{CNN}
 Source: \cite{river_trail}
 \label{cnn_fig}
@@ -365,7 +365,7 @@ The network was able to learn how to copy the given a*b* data (Figure \ref{loss_
 
 \begin{figure}[!htb]
 \centering
-\caption{User guided model loss.}
+\caption{User guided model loss (5\% guidance).}
 \includegraphics[width=\textwidth]{loss/Guided_5}
 Source: authors.
 \label{loss_5}
@@ -377,7 +377,7 @@ We trained the network again, but using 0.008\% guidance. In a 256x256 image, it
 
 \begin{figure}[!htb]
 \centering
-\caption{User guided model loss.}
+\caption{User guided model loss (0.008\% guidance).}
 \includegraphics[width=\textwidth]{loss/Guided_0_008}
 Source: authors.
 \label{loss_0_008}
@@ -418,7 +418,7 @@ We implemented a similar architecture in Keras. For simplicity, we use a classic
 \begin{figure}[!htb]
 \centering
 \caption{Mask regression network.}
-\includegraphics[width=\textwidth/2]{mask_network}
+\includegraphics[width=\textwidth/2]{mask_network}\\
 Source: authors.
 \label{mask_net}
 \end{figure}
@@ -519,13 +519,13 @@ The generated dataset and its metadata is open-source and can be used in future 
 \bibliography{referencias.bib}
 %\printbibliography
 
-\appendix
-\chapter{Appendix -- Simple architecture model}
+\begin{apendicesenv}
+\chapter{Simple architecture model}
 
 \begin{figure}[!htb]
 \centering
 \caption{Simple model architecture expanded - Part 1.}
-\includegraphics[height = \textheight - 1.5cm]{model_plot/Simple1}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{model_plot/Simple1}
 Source: authors.
 \label{simple_plot_1}
 \end{figure}
@@ -533,17 +533,17 @@ Source: authors.
 \begin{figure}[!htb]
 \centering
 \caption{Simple model architecture expanded - Part 2.}
-\includegraphics[height = \textheight - 1.5cm]{model_plot/Simple2}
+\includegraphics[height=\textheight - 38pt,keepaspectratio]{model_plot/Simple2}
 \label{simple_plot_2}
 Source: authors.
 \end{figure}
 
-\chapter{Appendix -- Guided architecture model}
+\chapter{Guided architecture model}
 
 \begin{figure}[!htb]
 \centering
 \caption{Guided model architecture expanded - Part 1.}
-\includegraphics[height = \textheight - 1.5cm]{model_plot/Guided1}
+\includegraphics[height=\textheight - 38pt,keepaspectratio]{model_plot/Guided1}
 Source: authors.
 \label{guided_plot_1}
 \end{figure}
@@ -551,28 +551,34 @@ Source: authors.
 \begin{figure}[!htb]
 \centering
 \caption{Guided model architecture expanded - Part 2.}
-\includegraphics[height = \textheight - 1.5cm]{model_plot/Guided2}
+\includegraphics[height=\textheight - 38pt,keepaspectratio]{model_plot/Guided2}
 Source: authors.
 \label{guided_plot_2}
 \end{figure}
 
-\chapter{Appendix -- Stateful architecture model}
 
+\chapter{Stateful architecture model}
+\clearpage
+\newpage
 \begin{figure}[!htb]
 \centering
 \caption{Stateful model architecture expanded - Part 1.}
-\includegraphics[height = \textheight - 1.5cm]{model_plot/Stateful1}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{model_plot/Stateful1}
 Source: authors.
 \label{stateful_plot_1}
 \end{figure}
-
+\clearpage
+\newpage
 \begin{figure}[!htb]
 \centering
 \caption{Stateful model architecture expanded - Part 2.}
-\includegraphics[height = \textheight]{model_plot/Stateful2}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{model_plot/Stateful2}
 Source: authors.
 \label{stateful_plot_2}
 \end{figure}
+\clearpage
+\newpage
 
+\end{apendicesenv}
 \end{otherlanguage}
 \end{document}
